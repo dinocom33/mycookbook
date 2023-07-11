@@ -47,14 +47,14 @@ in progress....
 
 ## Installation
 
-To install the project follow the steps bellow:
+To install the project follow the steps bellow(please bare in mind that you have to setup database before migration):
 
 ```bash
-1. Clone the repository
-2. Install requirements.txt
-3. Setup database
-4. Migrate
-5. Start project
+git clone https://github.com/dinocom33/mycookbook.git
+pip install requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
 ```
 
 
