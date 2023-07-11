@@ -11,7 +11,7 @@ Cooking recipes sharing app.
 - [Installation](#installation)
 - [Technologies](#technologies)
 - [License](#license)
-- [Screenshots](screenshots)
+- [Screenshots](#screenshots)
 
 ## Project Description
 
