@@ -1,0 +1,47 @@
+{% extends 'common/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container my-3 p-3">
+
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div id="form_errors">
+                        {% for key, value in form.errors.items %}
+                            <strong>{{ value }}</strong>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Edit Recipe</legend>
+            </fieldset>
+            <form method="POST" action="{% url 'edit recipe' recipe.pk recipe.slug%}">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-6">
+                        {{ form.title|as_crispy_field }}
+                    </div>
+                    <div class="col-6">
+                        {{ form.ingredients|as_crispy_field }}
+                    </div>
+                    <div class="col-6">
+                        {{ form.instructions|as_crispy_field }}
+                    </div>
+                    <div class="col-6">
+                        {{ form.category|as_crispy_field }}
+                    </div>
+                    <div class="col-6">
+                        {{ form.image_url|as_crispy_field }}
+                    </div>
+                    <div class="form-group py-3">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn" onclick="history.back()">Back</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+{% endblock %}

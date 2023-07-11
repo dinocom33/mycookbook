@@ -1,0 +1,49 @@
+{% extends "common/base.html" %}
+{% load static %}
+{% block title %} Register{% endblock title %}
+
+{% block content %}
+    <div class="signup-form">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div id="form_errors">
+                        {% for key, value in form.errors.items %}
+                            <strong>{{ value }}</strong>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            <h2>Register</h2>
+            <div class="form-group">
+                <div class="row">
+                    <label class="small mb-1">Username</label>
+                    {{ form.username }}
+                    {{ form.errors.username }}
+                    <label class="small mb-1">Email</label>
+                    {{ form.email }}
+                    {{ form.errors.email }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="small mb-1">Password</label>
+                    {{ form.password1 }}
+                    {{ form.errors.password }}
+                    <label class="small mb-1">Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Register Now</button>
+                </div>
+            </div>
+            <div class="text-center">Already have an account? <a href="{% url 'login' %}" style="color: blue">Sign in</a></div>
+        </form>
+    </div>
+{% endblock content %}

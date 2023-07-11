@@ -1,0 +1,19 @@
+<!-- recipe_confirm_delete.html -->
+
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <section class="wrapper">
+        <div class="container-fostrap">
+            <h1>Confirm Delete</h1>
+
+            <p>Are you sure you want to delete the recipe "{{ recipe.title }}"?</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+                <a href="{% url 'my recipes' request.user.pk %}">Cancel</a>
+            </form>
+        </div>
+    </section>
+{% endblock %}

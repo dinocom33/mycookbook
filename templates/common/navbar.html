@@ -1,0 +1,58 @@
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="{% url 'index' %}"><i class="fa fa-cube"></i>My <b>Cook book</b></a>
+        <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+            <span class="navbar-toggler-icon"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'index' %}">Home</a></li>
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="{% url 'all recipes' %}">Recipes <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'recipe by category' category='salads' %}">Salads</a></li>
+                    <li><a href="{% url 'recipe by category' category='soups' %}">Soups</a></li>
+                    <li><a href="{% url 'recipe by category' category='main_dishes' %}">Main dishes</a></li>
+                    <li><a href="{% url 'recipe by category' category='desserts' %}">Desserts</a></li>
+                    <li><a href="{% url 'recipe by category' category='bbq' %}">BBQ</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="{% url 'all recipes' %}">All recipes</a></li>
+                </ul>
+            </li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <form method="get" class="navbar-form form-inline" action="{% url 'search results' %}">
+            <div class="input-group search-box">
+                <input type="text" id="search" class="form-control" name="q" placeholder="Search by title or ingredients">
+                <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+            </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+            {% if request.user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle user-action">
+                        <img src="{{ user.profile.avatar.url }}" class="avatar">
+                        {% firstof request.user.profile.get_full_name request.user.username %} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'edit profile' user.pk %}"><i class="fa fa-user-o"></i> Profile</a></li>
+                        <li><a href="{% url 'my recipes' user.pk %}"><i class="fa-thin fa-pot-food"></i> My recipes</a></li>
+                        <li><a href="{% url 'favorite recipes' request.user.pk %}"><i class="fa-thin fa-pot-food"></i> My Favorite Recipes</a></li>
+                        <li><a href="{% url 'add recipe' %}"><i class="fa-thin fa-pot-food"></i> Add recipe</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Login</a></li>
+                <li><a href="{% url 'register user' %}"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign up</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

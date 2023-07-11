@@ -1,0 +1,42 @@
+{% extends "common/base.html" %}
+{% block title %} My favorite Recipes{% endblock title %}
+{% block content %}
+    <section class="wrapper">
+        <div class="container-fostrap">
+            <h1>My favorite Recipes:</h1>
+            {% if favorites %}
+                <div class="content">
+                    <div class="container">
+                        <div class="row">
+                            {% for recipe in favorites %}
+                                <div class="col-xs-12 col-sm-4">
+                                    <div class="card">
+                                        <a class="img-card"
+                                           href="{% url 'my recipe details' recipe.pk recipe.slug %}">
+                                            <img src="{{ recipe.image_url }}" alt="Recipe image"/></a>
+                                        <div class="card-content">
+                                            <h4><strong>{{ recipe.title }}</strong></h4>
+                                            <h5 class="card-subtitle">Author:
+                                                {% firstof recipe.created_by.profile.get_full_name recipe.created_by.username %}</h5>
+                                            <h5 class="card-subtitle">Added: {{ recipe.created_at }}</h5>
+                                            <p class="">{{ recipe.ingredients|safe|slice:":80" }}...</p>
+                                        </div>
+                                        <div class="card-read-more">
+                                            <a href="{% url 'my recipe details' recipe.pk recipe.slug %}"
+                                               class="btn btn-link btn-block">See full recipe</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No recipes found.</p>
+            {% endif %}
+        </div>
+    </section>
+    <div class="paginator">
+        {% include 'common/pagination.html' %}
+    </div>
+{% endblock %}

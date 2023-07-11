@@ -1,0 +1,112 @@
+{% extends 'common/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ recipe.title }}</h1>
+        <p><strong>Category:</strong> {{ recipe.get_category_display }}</p>
+        {% if recipe.image_url %}
+            <img src="{{ recipe.image_url }}" alt="" width="600" height="400"/>
+        {% else %}
+            <img src="/static/images/no-image-available.jpeg" alt=""/>
+        {% endif %}
+        <p>Created by: {{ recipe.created_by }}</p>
+        <p>Created at: {{ recipe.created_at }}</p>
+        <p>Last updated at: {{ recipe.updated_at }}</p>
+
+        <h2>Ingredients</h2>
+        <div>
+            <pre style="white-space: pre-wrap; word-break: keep-all;">{{ recipe.ingredients }}</pre>
+        </div>
+        <h2>Instructions</h2>
+        <div>
+            <pre style="white-space: pre-wrap; word-break: keep-all;">{{ recipe.instructions }}</pre>
+        </div>
+        <div>
+            <span class="heart">
+                <a href="{% url 'like recipe' recipe.pk recipe.slug %}">
+                    {% if liked_by_user %}
+                        <svg style="color: red"
+                             xmlns="http://www.w3.org/2000/svg"
+                             width="24"
+                             height="24"
+                             fill="currentColor"
+                             class="bi bi-heart-fill"
+                             viewBox="0 0 16 16">
+                        <!-- Coordinate path -->
+                        <path fill-rule="evenodd"
+                              d="M8 1.314C12.438-3.248 23.534 4.735
+                              8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                              fill="red">
+                        </path>
+                        </svg>
+                    {% else %}
+                        <svg aria-label="Like"
+                             color="#262626"
+                             fill="#262626"
+                             height="24"
+                             role="img"
+                             viewBox="0 0 48 48"
+                             width="24">
+                            <!-- Coordinate path -->
+                            <path d="M34.6 6.1c5.7 0 10.4 5.2 10.4
+                                        11.5 0 6.8-5.9 11-11.5 16S25 41.3 24
+                                        41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3
+                                        11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3
+                                        1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9
+                                        1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9
+                                        1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1
+                                        0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3
+                                        1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3
+                                        1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2
+                                        7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6
+                                        48 25 48 17.6c0-8-6-14.5-13.4-14.5z">
+                            </path>
+                        </svg>
+                    {% endif %}
+                </a>
+            </span>
+        </div>
+        <p>Total likes: {{ recipe.likedrecipe_set.count }}</p>
+        <div>
+            <form method="post" action="{% url 'add to favorites' recipe.pk recipe.slug %}">
+                {#                {% if not request.user. %}#}
+                {% csrf_token %}
+                {{ add_to_favorite_form }}
+                <button type="submit" class="btn btn-primary">Add to My Favorites</button>
+            </form>
+        </div>
+        <div>
+            {% for comment in recipe.commentsmodel_set.all %}
+                <div class="flex-container">
+                    <p><strong>{% firstof comment.user.profile.get_full_name comment.user.username %}</strong></p>
+                    <pre>{{ comment.text }}</pre>
+                    <span>{{ comment.published_date }}</span>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+        {% if request.user.is_authenticated %}
+            <div>
+                <form method="post" action="{% url 'recipe details' recipe.pk recipe.slug %}">
+                    {{ comment_form.text|as_crispy_field }}
+                    <button class="btn" type="submit">Post comment</button>
+                    {% csrf_token %}
+                </form>
+            </div>
+        {% else %}
+            <div>
+                <p>You need to <a href="{% url 'login' %}">login</a> to post a comment</p>
+            </div>
+        {% endif %}
+        <br>
+        <div class="col-4">
+            {% if request.user.is_staff %}
+                <a class="btn btn-outline-info" href="{% url 'edit recipe' recipe.pk recipe.slug %}">Edit</a>
+                <a class="btn btn-outline-danger" href="{% url 'delete recipe' recipe.pk recipe.slug %}">Delete</a>
+            {% endif %}
+            <input class="btn" type="button" value="Back" onclick="history.back()">
+        </div>
+        <br>
+    </div>
+{% endblock %}

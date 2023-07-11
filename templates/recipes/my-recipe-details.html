@@ -1,0 +1,43 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ recipe.title }}</h1>
+        <p><strong>Category:</strong> {{ recipe.get_category_display }}</p>
+        {% if recipe.image_url %}
+            <img src="{{ recipe.image_url }}" alt="static/images/no-image-available.jpeg" width="600" height="400">
+        {% endif %}
+        <p>Created by: {{ recipe.created_by }}</p>
+        <p>Created at: {{ recipe.created_at }}</p>
+        <p>Last updated at: {{ recipe.updated_at }}</p>
+
+        <h2>Ingredients</h2>
+        <div>
+            <pre style="white-space: pre-wrap; word-break: keep-all;">{{ recipe.ingredients }}</pre>
+        </div>
+        <h2>Instructions</h2>
+        <div>
+            <pre style="white-space: pre-wrap; word-break: keep-all;">{{ recipe.instructions }}</pre>
+        </div>
+        <div>
+            {% for comment in recipe.commentsmodel_set.all %}
+                <div class="comment">
+                    <p>
+                        <strong>{% firstof comment.user.profile.get_full_name comment.user.username %}</strong>
+                    </p>
+                    <p>{{ comment.text }}</p>
+                    <span>{{ comment.published_date }}</span>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+        <div class="col-4">
+            {% if request.user == recipe.created_by %}
+                <a class="btn btn-outline-info" href="{% url 'edit recipe' recipe.pk recipe.slug %}">Edit</a>
+                <a class="btn btn-outline-danger" href="{% url 'delete recipe' recipe.pk recipe.slug %}">Delete</a>
+            {% endif %}
+            <input class="btn" type="button" value="Back" onclick="history.back()">
+        </div>
+    </div>
+    <br>
+{% endblock %}

@@ -1,0 +1,47 @@
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <h6>About</h6>
+                <p class="text-justify">Introducing My cook book - a dynamic and interactive food recipe platform where
+                    users from all around the world can share their culinary creations and receive ratings from fellow
+                    food enthusiasts. My cook book offers a user-friendly interface that allows individuals to upload
+                    their favorite recipes with ease, accompanied by mouthwatering photos and detailed instructions.
+                    With a vibrant and diverse community, users can explore a vast collection of recipes spanning
+                    various cuisines, dietary preferences, and cooking styles.
+                </p>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+                <h6>Categories</h6>
+                <ul class="footer-links">
+                    <li><a href="{% url 'recipe by category' category='salads' %}">Salads</a></li>
+                    <li><a href="{% url 'recipe by category' category='soups' %}">Soups</a></li>
+                    <li><a href="{% url 'recipe by category' category='main_dishes' %}">Main dishes</a></li>
+                    <li><a href="{% url 'recipe by category' category='desserts' %}">Deserts</a></li>
+                    <li><a href="{% url 'recipe by category' category='bbq' %}">BBQ</a></li>
+                    <li><a href="{% url 'all recipes' %}">All recipes</a></li>
+                </ul>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+                <h6>Quick Links</h6>
+                <ul class="footer-links">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+                <p class="copyright-text">Copyright &copy; 2023 All Rights Reserved by
+                    <a href="#">Mycookbook</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>

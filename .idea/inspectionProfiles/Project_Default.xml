@@ -1,0 +1,81 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="CssUnknownProperty" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myCustomPropertiesEnabled" value="true" />
+      <option name="myIgnoreVendorSpecificProperties" value="false" />
+      <option name="myCustomPropertiesList">
+        <value>
+          <list size="5">
+            <item index="0" class="java.lang.String" itemvalue="clip-path" />
+            <item index="1" class="java.lang.String" itemvalue="transform" />
+            <item index="2" class="java.lang.String" itemvalue="transform-origin" />
+            <item index="3" class="java.lang.String" itemvalue="sform" />
+            <item index="4" class="java.lang.String" itemvalue="box-orient" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="22">
+            <item index="0" class="java.lang.String" itemvalue="\" />
+            <item index="1" class="java.lang.String" itemvalue="href" />
+            <item index="2" class="java.lang.String" itemvalue="v-for" />
+            <item index="3" class="java.lang.String" itemvalue="v-if" />
+            <item index="4" class="java.lang.String" itemvalue="v-on:submit" />
+            <item index="5" class="java.lang.String" itemvalue="v-model" />
+            <item index="6" class="java.lang.String" itemvalue="v-on" />
+            <item index="7" class="java.lang.String" itemvalue="novalidate" />
+            <item index="8" class="java.lang.String" itemvalue="v-on:submit.native" />
+            <item index="9" class="java.lang.String" itemvalue="@submit" />
+            <item index="10" class="java.lang.String" itemvalue="@click" />
+            <item index="11" class="java.lang.String" itemvalue="is-3" />
+            <item index="12" class="java.lang.String" itemvalue="novalite" />
+            <item index="13" class="java.lang.String" itemvalue="v-on:change" />
+            <item index="14" class="java.lang.String" itemvalue="v-bind:key" />
+            <item index="15" class="java.lang.String" itemvalue="dropdown-toggle" />
+            <item index="16" class="java.lang.String" itemvalue="btn-primary" />
+            <item index="17" class="java.lang.String" itemvalue="btn" />
+            <item index="18" class="java.lang.String" itemvalue="get-started-btn" />
+            <item index="19" class="java.lang.String" itemvalue="mt-1" />
+            <item index="20" class="java.lang.String" itemvalue="mb-1" />
+            <item index="21" class="java.lang.String" itemvalue="me-2" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="12">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="class" />
+            <item index="7" class="java.lang.String" itemvalue="femergenode" />
+            <item index="8" class="java.lang.String" itemvalue="femerge" />
+            <item index="9" class="java.lang.String" itemvalue="fegaussianblur" />
+            <item index="10" class="java.lang.String" itemvalue="rel" />
+            <item index="11" class="java.lang.String" itemvalue="href" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="list.__getitem__" />
+          <option value="list.order_food" />
+          <option value="list.order_drink" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

@@ -1,0 +1,13 @@
+<div class="hero-image">
+  <div class="hero-text">
+    <h1 style="font-size:50px">What are you gonna cook today?</h1>
+    <p>Search for your favorite recipe</p>
+      <form method="get" class="navbar-form form-inline" action="{% url 'search results' %}">
+            <div class="input-group search-box">
+                <input type="text" id="search" class="form-control" name="q" placeholder="Search by title or ingredients">
+                <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+            </div>
+        </form>
+  </div>
+
+</div>
