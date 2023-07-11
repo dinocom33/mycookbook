@@ -64,3 +64,13 @@ python manage.py runserver
 
 
 ## Screenshots
+
+![home_page](https://github.com/dinocom33/mycookbook/assets/59865649/8521a2e9-0f72-4fc2-b1b8-4b35ebd809b3)
+
+
+![login](https://github.com/dinocom33/mycookbook/assets/59865649/8113bf60-32d4-4951-baee-152335613af9)
+
+![signup](https://github.com/dinocom33/mycookbook/assets/59865649/8a9e0bd7-9b28-488a-b89e-48d0059e5710)
+
+![categories](https://github.com/dinocom33/mycookbook/assets/59865649/3bff3ced-0b92-4f1d-8ef2-e24644e2d99a)
+
