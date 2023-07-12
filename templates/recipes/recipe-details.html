@@ -71,7 +71,6 @@
         {% if not added_to_favorite %}
             <div>
                 <form method="post" action="{% url 'add to favorites' recipe.pk recipe.slug %}">
-                    {#                {% if not request.user. %}#}
                     {% csrf_token %}
                     {{ add_to_favorite_form }}
                     <button type="submit" class="btn btn-primary">Add to My Favorites</button>
@@ -80,7 +79,6 @@
         {% else %}
             <div>
                 <form method="post" action="{% url 'remove from favorites' recipe.pk recipe.slug %}">
-                    {#                {% if not request.user. %}#}
                     {% csrf_token %}
                     {{ remove_from_favorite_form }}
                     <button type="submit" class="btn btn-primary">Remove from Favorites</button>
