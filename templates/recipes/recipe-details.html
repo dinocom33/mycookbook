@@ -25,7 +25,7 @@
         <div>
             <span class="heart">
                 <a href="{% url 'like recipe' recipe.pk recipe.slug %}">
-                    {% if liked_by_user %}
+                    {% if liked_recipe %}
                         <svg style="color: red"
                              xmlns="http://www.w3.org/2000/svg"
                              width="24"
@@ -66,8 +66,9 @@
                     {% endif %}
                 </a>
             </span>
+            Total likes: {{ recipe.likedrecipe_set.count }}
         </div>
-        <p>Total likes: {{ recipe.likedrecipe_set.count }}</p>
+        <br>
         {% if not added_to_favorite %}
             <div>
                 <form method="post" action="{% url 'add to favorites' recipe.pk recipe.slug %}">
@@ -85,6 +86,7 @@
                 </form>
             </div>
         {% endif %}
+        <br>
         <div>
             {% for comment in recipe.commentsmodel_set.all %}
                 <div class="flex-container">

@@ -81,7 +81,7 @@ class RecipesDetailsView(FormMixin, DetailView):
         context = super(RecipesDetailsView, self).get_context_data(**kwargs)
         context['comment_form'] = CommentForm(initial={'recipe': self.object})
         if self.request.user.is_authenticated:
-            context['liked_by_user'] = LikedRecipe.objects.filter(user=self.request.user).exists()
+            context['liked_recipe'] = LikedRecipe.objects.filter(user=self.request.user, recipe=self.object).exists()
             context['added_to_favorite'] = FavoriteRecipeModel.objects.filter(
                 user=self.request.user,
                 recipe__pk=self.kwargs['pk']).exists()
@@ -213,10 +213,11 @@ class FavoriteListView(LoginRequiredMixin, ListView):
 @login_required
 def hit_like_button(request, pk, slug):
     recipe = get_object_or_404(Recipe, pk=pk, slug=slug)
+    user = request.user
 
     liked_recipe, created = LikedRecipe.objects.get_or_create(
         recipe=recipe,
-        user=request.user
+        user=user
     )
 
     if not created:
