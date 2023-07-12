@@ -80,7 +80,11 @@ class RecipesDetailsView(FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(RecipesDetailsView, self).get_context_data(**kwargs)
         context['comment_form'] = CommentForm(initial={'recipe': self.object})
-        context['liked_by_user'] = LikedRecipe.objects.filter(user=self.request.user).exists()
+        if self.request.user.is_authenticated:
+            context['liked_by_user'] = LikedRecipe.objects.filter(user=self.request.user).exists()
+            context['added_to_favorite'] = FavoriteRecipeModel.objects.filter(
+                user=self.request.user,
+                recipe__pk=self.kwargs['pk']).exists()
 
         return context
 
@@ -94,7 +98,7 @@ class RecipesDetailsView(FormMixin, DetailView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.recipe = Recipe.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+        form.instance.recipe = Recipe.objects.filter(pk=self.kwargs['pk'], slug=self.kwargs['slug']).get()
         form.save()
         return super().form_valid(form)
 
@@ -138,6 +142,11 @@ class RecipeByCategoryView(ListView):
     context_object_name = 'recipe_by_category'
     paginate_by = 6
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.kwargs['category']
+        return context
+
     def get_queryset(self):
         category = self.kwargs['category']
         return Recipe.objects.filter(category=category).order_by('-created_at')
@@ -158,12 +167,35 @@ class AddToFavoritesView(LoginRequiredMixin, FormMixin, DetailView):
         recipe_pk = self.kwargs['pk']
         user = request.user
 
-        if FavoriteRecipeModel.objects.filter(user=user, recipe__pk=recipe_pk).exists():
-            pass
-        else:
+        if not FavoriteRecipeModel.objects.filter(user=user, recipe__pk=recipe_pk).exists():
             recipe = Recipe.objects.get(pk=recipe_pk)
             favorite = FavoriteRecipeModel(user=user, recipe=recipe)
             favorite.save()
+            messages.info(request, "This recipe was added to favorites.")
+
+        return redirect('recipe details', pk=recipe_pk, slug=recipe.slug)
+
+
+class RemoveFromFavoritesView(LoginRequiredMixin, FormMixin, DetailView):
+    model = Recipe
+    form_class = AddToFavoriteForm
+    template_name = 'recipes/recipe-details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['remove_from_favorite_form'] = AddToFavoriteForm()
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        recipe_pk = self.kwargs['pk']
+        user = request.user
+
+        if FavoriteRecipeModel.objects.filter(user=user, recipe__pk=recipe_pk).exists():
+            recipe = Recipe.objects.get(pk=recipe_pk)
+            favorite = FavoriteRecipeModel.objects.get(user=user, recipe=recipe)
+            favorite.delete()
+            messages.info(request, "This recipe was removed from favorites.")
 
         return redirect('recipe details', pk=recipe_pk, slug=recipe.slug)
 
