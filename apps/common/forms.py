@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
 
-from apps.common.models import CommentsModel
+from apps.common.models import CommentsModel, Contact
 
 
 class RegisterForm(UserCreationForm):
@@ -95,3 +95,31 @@ class SearchForm(forms.Form):
             }
         )
     )
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        exclude = ['date_sent', ]
+        widgets = {
+            'message': forms.Textarea(
+                attrs={
+                    'placeholder': 'Add your message...'
+                }),
+            'subject': forms.TextInput(
+                attrs={
+                    'placeholder': 'Subject...'
+                }),
+            'email': forms.TextInput(
+                attrs={
+                    'placeholder': 'Email...'
+                }),
+            'first_name': forms.TextInput(
+                attrs={
+                    'placeholder': 'First Name...'
+                }),
+            'last_name': forms.TextInput(
+                attrs={
+                    'placeholder': 'Last Name...'
+                }),
+        }

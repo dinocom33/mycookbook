@@ -1,0 +1,33 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="container contact">
+        <form action="{% url 'contact' %}" method="post">
+            {% csrf_token %}
+{#            {{ form }}#}
+            <label for="fname">First Name</label>
+{#            <input type="text" id="fname" name="firstname" placeholder="Your name..">#}
+            {{ form.first_name }}
+
+            <label for="lname">Last Name</label>
+{#            <input type="text" id="lname" name="lastname" placeholder="Your last name..">#}
+            {{ form.last_name }}
+
+            <label for="subject">Email</label>
+{#            <input type="text" id="email" name="lastname" placeholder="Your email..">#}
+            {{ form.email }}
+
+            <label for="subject">Subject</label>
+{#            <input type="text" id="email" name="lastname" placeholder="Subject..">#}
+            {{ form.subject }}
+
+            <label for="subject">Message</label>
+{#            <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>#}
+            {{ form.message }}
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <br>
+
+{% endblock %}

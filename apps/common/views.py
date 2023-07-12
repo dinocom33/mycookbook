@@ -4,9 +4,9 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, FormView
 
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, ContactForm
 from ..recipes.models import Recipe, FavoriteRecipeModel
 
 
@@ -51,3 +51,19 @@ class UserLoginView(LoginView):
 class AboutView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'common/about.html')
+
+
+def contact_view(request):
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'common/success.html')
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'common/contact.html', context)

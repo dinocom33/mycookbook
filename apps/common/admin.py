@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.common.models import CommentsModel
+from apps.common.models import CommentsModel, Contact
 
 
 @admin.register(CommentsModel)
@@ -10,3 +10,9 @@ class CommentsModelAdmin(admin.ModelAdmin):
     search_fields = ('text', 'recipe', 'user')
 
 
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('email', 'first_name', 'last_name', 'subject', 'message', 'date_sent')
+    list_filter = ('email', 'first_name', 'last_name', 'subject', 'date_sent')
+    search_fields = ('email', 'first_name', 'last_name', 'subject', 'date_sent')
+    readonly_fields = ('date_sent',)
