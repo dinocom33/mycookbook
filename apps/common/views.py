@@ -46,3 +46,8 @@ class UserLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('edit profile', args=[self.request.user.pk])
+
+
+class AboutView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'common/about.html')

@@ -1,11 +1,12 @@
 from django.contrib import admin
 
+from apps.common.models import CommentsModel
 from apps.recipes.models import Recipe, FavoriteRecipeModel, LikedRecipe
 
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_by', 'created_at', 'updated_at')
+    list_display = ('title', 'created_by', 'created_at', 'updated_at', 'likes_count', 'favorite_count', 'comments_count')
     list_filter = ('created_by', 'created_at', 'updated_at', 'title')
     search_fields = ('created_by', 'created_at', 'updated_at', 'title')
     auto_populate_field = ('slug',)
@@ -64,6 +65,21 @@ class RecipeAdmin(admin.ModelAdmin):
 
     )
 
+    def likes_count(self, obj):
+        return LikedRecipe.objects.filter(recipe=obj).count()
+
+    likes_count.short_description = 'Likes'
+
+    def favorite_count(self, obj):
+        return FavoriteRecipeModel.objects.filter(recipe=obj).count()
+
+    favorite_count.short_description = 'Favorite to'
+
+    def comments_count(self, obj):
+        return CommentsModel.objects.filter(recipe=obj).count()
+
+    comments_count.short_description = 'Comments'
+
 
 @admin.register(FavoriteRecipeModel)
 class AdminFavoriteRecipe(admin.ModelAdmin):
@@ -87,7 +103,7 @@ class AdminFavoriteRecipe(admin.ModelAdmin):
                 )
             }
         )
-)
+    )
 
 
 @admin.register(LikedRecipe)
