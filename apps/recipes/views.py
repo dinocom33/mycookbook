@@ -1,9 +1,8 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView, DeleteView, UpdateView, ListView, RedirectView
+from django.views.generic import CreateView, DetailView, DeleteView, UpdateView, ListView
 from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from django.contrib import messages
@@ -18,7 +17,8 @@ class CreateRecipeView(LoginRequiredMixin, CreateView):
     model = Recipe
     fields = ['title', 'ingredients', 'instructions', 'category', 'image_url']
     template_name = 'recipes/create_recipe.html'
-    success_url = reverse_lazy('my recipes')
+
+    # success_url = reverse_lazy('my recipes')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -36,7 +36,7 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         recipe = self.get_object()
-        return self.request.user == recipe.created_by
+        return self.request.user == recipe.created_by or self.request.user.is_staff
 
     def get_success_url(self):
         user_pk = self.request.user.pk
@@ -48,13 +48,12 @@ class EditRecipeView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ['title', 'ingredients', 'instructions', 'category', 'image_url']
     template_name = 'recipes/edit_recipe.html'
 
-
     def get_success_url(self):
-        return reverse_lazy('my recipe details', kwargs={'pk': self.object.pk, 'slug': self.object.slug})
+        return reverse_lazy('recipe details', kwargs={'pk': self.object.pk, 'slug': self.object.slug})
 
     def test_func(self):
         recipe = self.get_object()
-        return self.request.user == recipe.created_by
+        return self.request.user == recipe.created_by or self.request.user.is_staff
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -149,7 +148,7 @@ class RecipeByCategoryView(ListView):
 
     def get_queryset(self):
         category = self.kwargs['category']
-        return Recipe.objects.filter(category=category).order_by('-created_at')
+        return Recipe.objects.filter(category=category).order_by('-updated_at')
 
 
 class AddToFavoritesView(LoginRequiredMixin, FormMixin, DetailView):
@@ -207,7 +206,7 @@ class FavoriteListView(LoginRequiredMixin, ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return self.request.user.favorite_recipes.all().order_by('-created_at')
+        return self.request.user.favorite_recipes.all().order_by('-updated_at')
 
 
 @login_required

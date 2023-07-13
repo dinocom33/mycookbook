@@ -8,7 +8,7 @@
         {% if recipe.image_url %}
             <img src="{{ recipe.image_url }}" alt="" width="600" height="400"/>
         {% else %}
-            <img src="/static/images/no-image-available.jpeg" alt=""/>
+            <img src="/static/images/no-image-available.jpeg" alt="" width="600" height="400"/>
         {% endif %}
         <p>Created by: {{ recipe.created_by }}</p>
         <p>Created at: {{ recipe.created_at }}</p>

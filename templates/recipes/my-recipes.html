@@ -11,9 +11,15 @@
                             {% for recipe in my_recipes %}
                                 <div class="col-xs-12 col-sm-4">
                                     <div class="card">
-                                        <a class="img-card"
-                                           href="{% url 'my recipe details' recipe.pk recipe.slug %}">
-                                            <img src="{{ recipe.image_url }}" alt="Recipe image"/></a>
+                                        {% if recipe.image_url %}
+                                            <a class="img-card"
+                                               href="{% url 'recipe details' recipe.pk recipe.slug %}">
+                                                <img src="{{ recipe.image_url }}" alt=""/></a>
+                                        {% else %}
+                                            <a class="img-card"
+                                               href="{% url 'recipe details' recipe.pk recipe.slug %}">
+                                                <img src="/static/images/no-image-available.jpeg" alt=""/></a>
+                                        {% endif %}
                                         <div class="card-content">
                                             <h4><strong>{{ recipe.title }}</strong></h4>
                                             <h5 class="card-subtitle">Author:

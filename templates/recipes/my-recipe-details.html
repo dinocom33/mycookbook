@@ -5,7 +5,9 @@
         <h1>{{ recipe.title }}</h1>
         <p><strong>Category:</strong> {{ recipe.get_category_display }}</p>
         {% if recipe.image_url %}
-            <img src="{{ recipe.image_url }}" alt="static/images/no-image-available.jpeg" width="600" height="400">
+            <img src="{{ recipe.image_url }}" width="600" height="400">
+            {% else %}
+            <img src="/static/images/no-image-available.jpeg" width="600" height="400" >
         {% endif %}
         <p>Created by: {{ recipe.created_by }}</p>
         <p>Created at: {{ recipe.created_at }}</p>

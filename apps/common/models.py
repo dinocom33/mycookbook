@@ -23,14 +23,14 @@ class CommentsModel(models.Model):
 
     recipe = models.ForeignKey(
         Recipe,
-        on_delete=models.RESTRICT,
+        on_delete=models.CASCADE,
         null=False,
         blank=True,
     )
 
     user = models.ForeignKey(
         UserModel,
-        on_delete=models.RESTRICT,
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
