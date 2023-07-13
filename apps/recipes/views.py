@@ -1,15 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, DeleteView, UpdateView, ListView
 from django.views.generic.edit import FormMixin
-from django.db.models import Q
+from django.db.models import Q, Avg
 from django.contrib import messages
 
 from apps.common.forms import CommentForm
-from apps.recipes.models import LikedRecipe
-from apps.recipes.forms import AddToFavoriteForm
+from apps.recipes.models import LikedRecipe, Rating
+from apps.recipes.forms import AddToFavoriteForm, RateForm
 from apps.recipes.models import Recipe, FavoriteRecipeModel
 
 
@@ -84,12 +84,16 @@ class RecipesDetailsView(FormMixin, DetailView):
             context['added_to_favorite'] = FavoriteRecipeModel.objects.filter(
                 user=self.request.user,
                 recipe__pk=self.kwargs['pk']).exists()
+            context['avg_rating'] = Rating.objects.filter(recipe=self.object).aggregate(Avg("rating"))["rating__avg"] or 0
 
         return context
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
+        # for recipe in Recipe.objects.all():
+        #     rating = Rating.objects.filter(recipe=recipe, user=self.request.user).first()
+        #     recipe.user_rating = rating.rating if rating else 0
         if form.is_valid():
             return self.form_valid(form)
         else:
@@ -225,5 +229,18 @@ def hit_like_button(request, pk, slug):
     else:
         liked_recipe.save()
         messages.info(request, "This recipe was liked.")
+
+    return redirect('recipe details', pk=recipe.pk, slug=recipe.slug)
+
+
+@login_required
+def rate_recipe_view(request, pk, slug):
+    recipe = get_object_or_404(Recipe, pk=pk, slug=slug)
+    rating = int(request.POST.get('rating', 0))
+
+    if 0 < rating <= 4:
+        recipe_rating, created = Rating.objects.get_or_create(user=request.user, recipe=recipe)
+        recipe_rating.rating = rating
+        recipe_rating.save()
 
     return redirect('recipe details', pk=recipe.pk, slug=recipe.slug)

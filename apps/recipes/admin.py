@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from apps.common.models import CommentsModel
-from apps.recipes.models import Recipe, FavoriteRecipeModel, LikedRecipe
+from apps.recipes.models import Recipe, FavoriteRecipeModel, LikedRecipe, Rating
 
 
 @admin.register(Recipe)
@@ -135,4 +135,35 @@ class AdminLikedRecipe(admin.ModelAdmin):
                     'liked_date',
                 )
             }),
+    )
+
+
+@admin.register(Rating)
+class AdminRating(admin.ModelAdmin):
+    list_display = ('user', 'recipe', 'rating')
+    list_filter = ('user', 'recipe', 'rating')
+    search_fields = ('user', 'recipe', 'rating')
+    fieldsets = (
+        (
+            'User',
+            {
+                'fields': (
+                    'user',
+                )
+            }),
+        (
+            'Recipe',
+            {
+                'fields': (
+                    'recipe',
+                )
+            }),
+        (
+            'Rating',
+            {
+                'fields': (
+                    'rating',
+                )
+            }
+        )
     )

@@ -3,9 +3,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth import get_user_model
 from autoslug import AutoSlugField
+from django.db.models import Avg
 from django.shortcuts import reverse
 
-User = get_user_model()
+UserModel = get_user_model()
 
 
 class Recipe(models.Model):
@@ -37,7 +38,7 @@ class Recipe(models.Model):
     )
 
     created_by = models.ForeignKey(
-        User,
+        UserModel,
         on_delete=models.CASCADE,
     )
 
@@ -68,7 +69,7 @@ class Recipe(models.Model):
     )
 
     favorites = models.ManyToManyField(
-        User,
+        UserModel,
         through='FavoriteRecipeModel',
         related_name='favorite_recipes'
     )
@@ -79,13 +80,16 @@ class Recipe(models.Model):
             'slug': self.slug,
         })
 
+    def average_rating(self) -> float:
+        return Rating.objects.filter(recipe=self).aggregate(Avg("rating"))["rating__avg"] or 0
+
     def __str__(self):
         return self.title
 
 
 class FavoriteRecipeModel(models.Model):
     user = models.ForeignKey(
-        User,
+        UserModel,
         on_delete=models.CASCADE
     )
     recipe = models.ForeignKey(
@@ -103,7 +107,7 @@ class FavoriteRecipeModel(models.Model):
 
 class LikedRecipe(models.Model):
     user = models.ForeignKey(
-        User,
+        UserModel,
         on_delete=models.CASCADE
     )
     recipe = models.ForeignKey(
@@ -117,7 +121,31 @@ class LikedRecipe(models.Model):
 
     class Meta:
         verbose_name = 'Likes'
-        verbose_name_plural = 'Likes'
+        verbose_name_plural = 'Recipe Likes'
 
     def __str__(self):
         return self.recipe.title + " liked by " + self.user.username
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE
+    )
+
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE
+    )
+
+    rating = models.IntegerField(
+        default=0,
+    )
+
+    class Meta:
+        verbose_name = 'Recipe Rating'
+        verbose_name_plural = 'Recipe Ratings'
+        unique_together = ['user', 'recipe']
+
+    def __str__(self):
+        return f"{self.recipe.title}: {self.rating}"

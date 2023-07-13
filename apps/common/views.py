@@ -14,7 +14,7 @@ from ..recipes.models import Recipe
 
 class IndexView(ListView):
     def get(self, request, *args, **kwargs):
-        recipes = Recipe.objects.all().order_by('-updated_at')[:3]
+        recipes = Recipe.objects.all().order_by('-created_at')[:3]
 
         context = {
             'recipes': recipes,

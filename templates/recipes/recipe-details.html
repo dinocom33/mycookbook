@@ -1,5 +1,6 @@
 {% extends 'common/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
     <div class="container">
@@ -67,6 +68,31 @@
                 </a>
             </span>
             Total likes: {{ recipe.likedrecipe_set.count }}
+            <div>
+                <h4 class="card-title">Avg rating:
+                    <span class="fa fa-star {% if recipe.average_rating > 0 %} checked {% endif %}"></span>
+                    <span class="fa fa-star {% if recipe.average_rating > 1 %} checked {% endif %}"></span>
+                    <span class="fa fa-star {% if recipe.average_rating > 2 %} checked {% endif %}"></span>
+                    <span class="fa fa-star {% if recipe.average_rating > 3 %} checked {% endif %}"></span>
+                    <span class="fa fa-star {% if recipe.average_rating > 4 %} checked {% endif %}"></span>
+                </h4>
+                <form method="post" action="{% url 'rate recipe' recipe.pk recipe.slug %}">
+                    {% csrf_token %}
+                    <div class="star-rating">
+                        <input type="radio" id="rating-5" name="rating" value="5">
+                        <label for="rating-5"></label>
+                        <input type="radio" id="rating-4" name="rating" value="4">
+                        <label for="rating-4"></label>
+                        <input type="radio" id="rating-3" name="rating" value="3">
+                        <label for="rating-3"></label>
+                        <input type="radio" id="rating-2" name="rating" value="2">
+                        <label for="rating-2"></label>
+                        <input type="radio" id="rating-1" name="rating" value="1">
+                        <label for="rating-1"></label>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Rate</button>
+                </form>
+            </div>
         </div>
         <br>
         {% if not added_to_favorite %}
@@ -101,7 +127,7 @@
             <div>
                 <form method="post" action="{% url 'recipe details' recipe.pk recipe.slug %}">
                     {{ comment_form.text|as_crispy_field }}
-                    <button class="btn" type="submit">Post comment</button>
+                    <button class="btn btn-primary" type="submit">Post comment</button>
                     {% csrf_token %}
                 </form>
             </div>
@@ -113,8 +139,12 @@
         <br>
         <div class="col-4">
             {% if request.user.is_staff %}
-                <a class="btn btn-outline-info" href="{% url 'edit recipe' recipe.pk recipe.slug %}">Edit</a>
-                <a class="btn btn-outline-danger" href="{% url 'delete recipe' recipe.pk recipe.slug %}">Delete</a>
+                <a href="{% url 'edit recipe' recipe.pk recipe.slug %}">
+                    <button class="btn btn-primary mt-3">Edit</button>
+                </a>
+                <a href="{% url 'delete recipe' recipe.pk recipe.slug %}">
+                    <button class="btn btn-danger mt-3">Delete</button>
+                </a>
             {% endif %}
             <input class="btn" type="button" value="Back" onclick="history.back()">
         </div>

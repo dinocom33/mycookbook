@@ -1,0 +1,41 @@
+.star-rating {
+    display: inline-block;
+    font-size: 0;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.star-rating label:before {
+    content: '\2605';
+}
+
+.star-rating input:checked ~ label {
+    color: #ffbf00;
+}
+
+.star-rating input:checked ~ label:before {
+    content: '\2605';
+}
+
+.star-rating input:not(:checked) ~ label:hover,
+.star-rating input:not(:checked) ~ label:hover ~ label {
+    color: #ffbf00;
+}
+
+.star-rating input:not(:checked) ~ label:hover:before,
+.star-rating input:not(:checked) ~ label:hover ~ label:before {
+    content: '\2605';
+}
+
+.checked {
+    color: orange;
+}
