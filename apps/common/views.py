@@ -1,13 +1,15 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
+from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView, FormView
+from django.views.generic import ListView, CreateView
 
 from .forms import RegisterForm, LoginForm, ContactForm
-from ..recipes.models import Recipe, FavoriteRecipeModel
+
+from ..recipes.models import Recipe
 
 
 class IndexView(ListView):
@@ -31,7 +33,7 @@ class RegisterView(CreateView):
         if request.user.is_authenticated:
             return redirect(to='index')
 
-        return super(RegisterView, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
 
 class UserLoginView(LoginView):
@@ -42,7 +44,18 @@ class UserLoginView(LoginView):
         if request.user.is_authenticated:
             return redirect(to='index')
 
-        return super(UserLoginView, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        remember_me = form.cleaned_data.get('remember_me')
+        if not remember_me:
+            self.request.session.set_expiry(0)
+        else:
+            self.request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+
+        login(self.request, form.get_user())
+        # return super().form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse_lazy('edit profile', args=[self.request.user.pk])

@@ -31,13 +31,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # third-party
     'crispy_forms',
     'crispy_bootstrap4',
 
     'apps.common',
     'apps.user_profile',
     'apps.recipes',
+
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
@@ -130,6 +131,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 LOGIN_REDIRECT_URL = reverse_lazy('edit profile')
 LOGIN_URL = reverse_lazy('login')

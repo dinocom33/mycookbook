@@ -93,6 +93,10 @@ class FavoriteRecipeModel(models.Model):
         on_delete=models.CASCADE
     )
 
+    class Meta:
+        verbose_name = 'Favorite Recipes'
+        verbose_name_plural = 'Favorite Recipes'
+
     def __str__(self):
         return f"{self.user} - {self.recipe.title}"
 
@@ -110,6 +114,10 @@ class LikedRecipe(models.Model):
     liked_date = models.DateTimeField(
         auto_now_add=True
     )
+
+    class Meta:
+        verbose_name = 'Likes'
+        verbose_name_plural = 'Likes'
 
     def __str__(self):
         return self.recipe.title + " liked by " + self.user.username

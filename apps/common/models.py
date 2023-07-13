@@ -84,6 +84,10 @@ class Contact(models.Model):
         auto_now_add=True,
     )
 
+    class Meta:
+        verbose_name = 'Contact forms'
+        verbose_name_plural = 'Contact forms'
+
     def __str__(self):
         if self.first_name and self.last_name:
             return f"{self.first_name} {self.last_name}"
