@@ -76,42 +76,44 @@
                     <span class="fa fa-star {% if recipe.average_rating > 3 %} checked {% endif %}"></span>
                     <span class="fa fa-star {% if recipe.average_rating > 4 %} checked {% endif %}"></span>
                 </h4>
-                <form method="post" action="{% url 'rate recipe' recipe.pk recipe.slug %}">
-                    {% csrf_token %}
-                    <div class="star-rating">
-                        <input type="radio" id="rating-5" name="rating" value="5">
-                        <label for="rating-5"></label>
-                        <input type="radio" id="rating-4" name="rating" value="4">
-                        <label for="rating-4"></label>
-                        <input type="radio" id="rating-3" name="rating" value="3">
-                        <label for="rating-3"></label>
-                        <input type="radio" id="rating-2" name="rating" value="2">
-                        <label for="rating-2"></label>
-                        <input type="radio" id="rating-1" name="rating" value="1">
-                        <label for="rating-1"></label>
+                {% if request.user.is_authenticated %}
+                    <form method="post" action="{% url 'rate recipe' recipe.pk recipe.slug %}">
+                        {% csrf_token %}
+                        <div class="star-rating">
+                            <input type="radio" id="rating-5" name="rating" value="5">
+                            <label for="rating-5"></label>
+                            <input type="radio" id="rating-4" name="rating" value="4">
+                            <label for="rating-4"></label>
+                            <input type="radio" id="rating-3" name="rating" value="3">
+                            <label for="rating-3"></label>
+                            <input type="radio" id="rating-2" name="rating" value="2">
+                            <label for="rating-2"></label>
+                            <input type="radio" id="rating-1" name="rating" value="1">
+                            <label for="rating-1"></label>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Rate</button>
+                    </form>
                     </div>
-                    <button class="btn btn-primary" type="submit">Rate</button>
-                </form>
-            </div>
-        </div>
-        <br>
-        {% if not added_to_favorite %}
-            <div>
-                <form method="post" action="{% url 'add to favorites' recipe.pk recipe.slug %}">
-                    {% csrf_token %}
-                    {{ add_to_favorite_form }}
-                    <button type="submit" class="btn btn-primary">Add to My Favorites</button>
-                </form>
-            </div>
-        {% else %}
-            <div>
-                <form method="post" action="{% url 'remove from favorites' recipe.pk recipe.slug %}">
-                    {% csrf_token %}
-                    {{ remove_from_favorite_form }}
-                    <button type="submit" class="btn btn-primary">Remove from Favorites</button>
-                </form>
-            </div>
-        {% endif %}
+                    </div>
+                    <br>
+                    {% if not added_to_favorite %}
+                        <div>
+                            <form method="post" action="{% url 'add to favorites' recipe.pk recipe.slug %}">
+                                {% csrf_token %}
+                                {{ add_to_favorite_form }}
+                                <button type="submit" class="btn btn-primary">Add to My Favorites</button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div>
+                            <form method="post" action="{% url 'remove from favorites' recipe.pk recipe.slug %}">
+                                {% csrf_token %}
+                                {{ remove_from_favorite_form }}
+                                <button type="submit" class="btn btn-primary">Remove from Favorites</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                {% endif %}
         <br>
         <div>
             {% for comment in recipe.commentsmodel_set.all %}
@@ -130,10 +132,6 @@
                     <button class="btn btn-primary" type="submit">Post comment</button>
                     {% csrf_token %}
                 </form>
-            </div>
-        {% else %}
-            <div>
-                <p>You need to <a href="{% url 'login' %}">login</a> to post a comment</p>
             </div>
         {% endif %}
         <br>

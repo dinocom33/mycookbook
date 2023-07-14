@@ -47,15 +47,13 @@ class UserLoginView(LoginView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        remember_me = form.cleaned_data.get('remember_me')
+        remember_me = form.cleaned_data['remember_me']
+
         if not remember_me:
             self.request.session.set_expiry(0)
-        else:
-            self.request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+            self.request.session.modified = True
 
-        login(self.request, form.get_user())
-        # return super().form_valid(form)
-        return HttpResponseRedirect(self.get_success_url())
+        return super(UserLoginView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('edit profile', args=[self.request.user.pk])
