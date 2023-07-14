@@ -6,10 +6,14 @@ from autoslug import AutoSlugField
 from django.db.models import Avg
 from django.shortcuts import reverse
 
+from apps.recipes.validators import recipe_title_validator
+
 UserModel = get_user_model()
 
 
 class Recipe(models.Model):
+
+    TITLE_MAX_LENGTH = 255
 
     CATEGORY_CHOICES = (
         ('salads', 'Salads'),
@@ -19,10 +23,15 @@ class Recipe(models.Model):
         ('deserts', 'Desserts'),
     )
 
+    CHOICES_MAX_LENGTH = max(len(c[0]) for c in CATEGORY_CHOICES)
+
     title = models.CharField(
-        max_length=255,
+        max_length=TITLE_MAX_LENGTH,
         null=False,
         blank=False,
+        validators=[
+            recipe_title_validator,
+        ],
         verbose_name='Recipe Title',
     )
 
@@ -52,7 +61,7 @@ class Recipe(models.Model):
     )
 
     category = models.CharField(
-        max_length=20,
+        max_length=CHOICES_MAX_LENGTH,
         null=False,
         blank=False,
         choices=CATEGORY_CHOICES,

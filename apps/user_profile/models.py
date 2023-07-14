@@ -4,10 +4,16 @@ from PIL import Image
 
 from django.contrib.auth.models import User
 
+from apps.user_profile.validators import first_and_last_name_validator
+
 UserModel = get_user_model()
 
 
 class Profile(models.Model):
+
+    FIRST_NAME_MAX_LENGTH = 100
+    LAST_NAME_MAX_LENGTH = 100
+
     user = models.OneToOneField(
         UserModel,
         on_delete=models.CASCADE,
@@ -15,15 +21,21 @@ class Profile(models.Model):
     )
 
     first_name = models.CharField(
-        max_length=100,
+        max_length=FIRST_NAME_MAX_LENGTH,
         null=True,
-        blank=True
+        blank=True,
+        validators=[
+            first_and_last_name_validator,
+        ]
     )
 
     last_name = models.CharField(
-        max_length=100,
+        max_length=LAST_NAME_MAX_LENGTH,
         null=True,
-        blank=True
+        blank=True,
+        validators=[
+            first_and_last_name_validator,
+        ]
     )
 
     avatar = models.ImageField(

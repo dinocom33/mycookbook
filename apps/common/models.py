@@ -1,15 +1,18 @@
 from django.contrib.auth import get_user_model
-from django.core import validators
+from django.core.validators import EmailValidator
 from django.db import models
 
 from apps.recipes.models import Recipe
+from apps.user_profile.validators import first_and_last_name_validator
 
 UserModel = get_user_model()
 
 
 class CommentsModel(models.Model):
+    TEXT_MAX_LENGTH = 300
+
     text = models.CharField(
-        max_length=300,
+        max_length=TEXT_MAX_LENGTH,
         null=False,
         blank=False,
         verbose_name='Comment',
@@ -34,7 +37,7 @@ class CommentsModel(models.Model):
     )
 
     def __str__(self):
-        return self.text
+        return f'{self.user} - {self.recipe.title}'
 
     class Meta:
         ordering = ['-published_date']
@@ -42,33 +45,44 @@ class CommentsModel(models.Model):
 
 
 class Contact(models.Model):
+    FIRST_NAME_MAX_LENGTH = 100
+    LAST_NAME_MAX_LENGTH = 100
+    EMAIL_MAX_LENGTH = 50
+    SUBJECT_MAX_LENGTH = 100
+
     first_name = models.CharField(
-        max_length=100,
+        max_length=FIRST_NAME_MAX_LENGTH,
         null=True,
         blank=True,
         verbose_name='First Name',
+        validators=[
+            first_and_last_name_validator,
+        ],
     )
 
     last_name = models.CharField(
-        max_length=100,
+        max_length=LAST_NAME_MAX_LENGTH,
         null=True,
         blank=True,
         verbose_name='Last Name',
+        validators=[
+            first_and_last_name_validator,
+        ],
     )
 
     email = models.EmailField(
-        max_length=100,
+        max_length=EMAIL_MAX_LENGTH,
         null=False,
         blank=False,
         validators=[
-            validators.EmailValidator(),
+            EmailValidator(message='Invalid email address custom message!!!')
         ],
         verbose_name='Email',
 
     )
 
     subject = models.CharField(
-        max_length=100,
+        max_length=SUBJECT_MAX_LENGTH,
         null=False,
         blank=False,
         verbose_name='Subject',

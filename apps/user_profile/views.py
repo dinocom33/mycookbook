@@ -13,10 +13,11 @@ from .forms import UpdateUserForm, UpdateProfileForm
 @login_required
 def edit_profile(request, pk):
     user = User.objects.filter(pk=pk).get()
+    profile = user.profile
 
     if request.method == 'GET':
         user_form = UpdateUserForm(instance=user)
-        profile_form = UpdateProfileForm(instance=user.profile)
+        profile_form = UpdateProfileForm(instance=profile)
     else:
         user_form = UpdateUserForm(request.POST, instance=user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=user.profile)
