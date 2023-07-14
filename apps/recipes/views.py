@@ -238,8 +238,11 @@ def rate_recipe_view(request, pk, slug):
     recipe = get_object_or_404(Recipe, pk=pk, slug=slug)
     rating = int(request.POST.get('rating', 0))
 
-    if 0 < rating <= 4:
+    if 0 < rating <= 5:
         recipe_rating, created = Rating.objects.get_or_create(user=request.user, recipe=recipe)
+        if recipe_rating:
+            recipe_rating.delete()
+
         recipe_rating.rating = rating
         recipe_rating.save()
 

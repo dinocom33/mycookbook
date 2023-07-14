@@ -20,6 +20,13 @@
                                                href="{% url 'recipe details' recipe.pk recipe.slug %}">
                                                 <img src="/static/images/no-image-available.jpeg" alt=""/></a>
                                         {% endif %}
+                                        <h5 class="card-subtitle">Avg rating:
+                                            <span class="fa fa-star {% if recipe.average_rating > 0 %} checked {% endif %}"></span>
+                                            <span class="fa fa-star {% if recipe.average_rating > 1 %} checked {% endif %}"></span>
+                                            <span class="fa fa-star {% if recipe.average_rating > 2 %} checked {% endif %}"></span>
+                                            <span class="fa fa-star {% if recipe.average_rating > 3 %} checked {% endif %}"></span>
+                                            <span class="fa fa-star {% if recipe.average_rating > 4 %} checked {% endif %}"></span>
+                                        </h5>
                                         <div class="card-content">
                                             <h4><strong>{{ recipe.title }}</strong></h4>
                                             <h5 class="card-subtitle">Author:
