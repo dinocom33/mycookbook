@@ -10,6 +10,7 @@ UserModel = get_user_model()
 
 
 class Recipe(models.Model):
+
     CATEGORY_CHOICES = (
         ('salads', 'Salads'),
         ('soups', 'Soups'),

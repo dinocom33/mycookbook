@@ -240,6 +240,7 @@ def rate_recipe_view(request, pk, slug):
 
     if 0 < rating <= 5:
         recipe_rating, created = Rating.objects.get_or_create(user=request.user, recipe=recipe)
+
         if recipe_rating:
             recipe_rating.delete()
 

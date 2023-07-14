@@ -85,7 +85,7 @@ class Contact(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Contact forms'
+        verbose_name = 'Contact form'
         verbose_name_plural = 'Contact forms'
 
     def __str__(self):
