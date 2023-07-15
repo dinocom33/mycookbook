@@ -47,11 +47,12 @@ class UserLoginView(LoginView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        remember_me = form.cleaned_data['remember_me']
+        remember_me = form.cleaned_data.get('remember_me')
 
         if not remember_me:
             self.request.session.set_expiry(0)
             self.request.session.modified = True
+            settings.SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
         return super(UserLoginView, self).form_valid(form)
 

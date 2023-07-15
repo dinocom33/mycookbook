@@ -123,3 +123,14 @@ class ContactForm(forms.ModelForm):
                     'placeholder': 'Last Name...'
                 }),
         }
+        error_messages = {
+            'email': {
+                'invalid': 'Please, enter a valid email address!',
+            },
+            'subject': {
+                'required': 'Subject field is required!',
+            },
+            'message': {
+                'required': 'Message field is required!',
+            },
+        }

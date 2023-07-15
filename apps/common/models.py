@@ -74,11 +74,10 @@ class Contact(models.Model):
         max_length=EMAIL_MAX_LENGTH,
         null=False,
         blank=False,
-        validators=[
-            EmailValidator(message='Invalid email address custom message!!!')
-        ],
         verbose_name='Email',
-
+        error_messages={
+            'invalid': 'Please, enter a valid email address!',
+        }
     )
 
     subject = models.CharField(
@@ -91,6 +90,9 @@ class Contact(models.Model):
     message = models.TextField(
         null=False,
         blank=False,
+        error_messages={
+            'required': 'Please, enter a message!',
+        },
         verbose_name='Message',
     )
 
