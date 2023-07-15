@@ -1,18 +1,18 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    {% if form.errors %}
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            <div id="form_errors">
-                {% for key, value in form.errors.items %}
-                    <strong>{{ value }}</strong>
-                {% endfor %}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-    {% endif %}
+{#    {% if form.errors %}#}
+{#        <div class="alert alert-danger alert-dismissible" role="alert">#}
+{#            <div id="form_errors">#}
+{#                {% for key, value in form.errors.items %}#}
+{#                    <strong>{{ value }}</strong>#}
+{#                {% endfor %}#}
+{#                <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+{#                    <span aria-hidden="true">&times;</span>#}
+{#                </button>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endif %}#}
     <div class="container contact">
         <form action="{% url 'contact' %}" method="post" novalidate>
             {% csrf_token %}
@@ -20,22 +20,28 @@
             <label for="fname">First Name</label>
             {#            <input type="text" id="fname" name="firstname" placeholder="Your name..">#}
             {{ form.first_name }}
+            <strong style="color: #AF0808">{{ form.errors.first_name }}</strong>
 
             <label for="lname">Last Name</label>
             {#            <input type="text" id="lname" name="lastname" placeholder="Your last name..">#}
             {{ form.last_name }}
+            <strong style="color: #AF0808">{{ form.errors.last_name }}</strong>
 
             <label for="subject">Email</label>
             {#            <input type="text" id="email" name="lastname" placeholder="Your email..">#}
             {{ form.email }}
+            <strong style="color: #AF0808">{{ form.errors.email }}</strong>
+            <strong style="color: #AF0808">{{ form.non_field_errors }}</strong>
 
             <label for="subject">Subject</label>
             {#            <input type="text" id="email" name="lastname" placeholder="Subject..">#}
             {{ form.subject }}
+            <strong style="color: #AF0808">{{ form.errors.subject }}</strong>
 
             <label for="subject">Message</label>
             {#            <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>#}
             {{ form.message }}
+            <strong style="color: #AF0808">{{ form.errors.message }}</strong>
 
             <input type="submit" value="Submit">
         </form>

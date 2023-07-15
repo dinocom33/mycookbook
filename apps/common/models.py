@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import EmailValidator
+from django.core.validators import EmailValidator, MinLengthValidator
 from django.db import models
 
+from apps.common.validators import contact_names_validator
 from apps.recipes.models import Recipe
-from apps.user_profile.validators import first_and_last_name_validator
 
 UserModel = get_user_model()
 
@@ -56,7 +56,7 @@ class Contact(models.Model):
         blank=True,
         verbose_name='First Name',
         validators=[
-            first_and_last_name_validator,
+            contact_names_validator,
         ],
     )
 
@@ -66,7 +66,7 @@ class Contact(models.Model):
         blank=True,
         verbose_name='Last Name',
         validators=[
-            first_and_last_name_validator,
+            contact_names_validator,
         ],
     )
 
@@ -75,6 +75,9 @@ class Contact(models.Model):
         null=False,
         blank=False,
         verbose_name='Email',
+        validators=[
+            EmailValidator,
+        ],
         error_messages={
             'invalid': 'Please, enter a valid email address!',
         }
@@ -84,12 +87,18 @@ class Contact(models.Model):
         max_length=SUBJECT_MAX_LENGTH,
         null=False,
         blank=False,
+        validators=[
+            MinLengthValidator(5, 'Subject must be at least 5 characters long!'),
+        ],
         verbose_name='Subject',
     )
 
     message = models.TextField(
         null=False,
         blank=False,
+        validators=[
+            MinLengthValidator(10, 'Message must be at least 10 characters long!'),
+        ],
         error_messages={
             'required': 'Please, enter a message!',
         },
