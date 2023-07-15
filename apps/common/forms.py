@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 from apps.common.models import CommentsModel, Contact
 
@@ -39,9 +39,17 @@ class RegisterForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data['email']
+
         if User.objects.filter(email=email).exists():
-            raise ValidationError("The email already exists")
+            raise ValidationError(f"The email {email} is already registered.")
         return email
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+
+        if User.objects.filter(username=username).exists():
+            raise ValidationError(f"The username {username} is already taken.")
+        return username
 
     class Meta:
         model = User
@@ -63,6 +71,19 @@ class LoginForm(AuthenticationForm):
                                                                  'name': 'password',
                                                                  }))
     remember_me = forms.BooleanField(required=False)
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+
+        try:
+            user = User.objects.get(username=username)
+            return user
+        except User.DoesNotExist:
+            raise forms.ValidationError(f"User '{username}' does not exist. Please try again.")
+
+    def confirm_login_allowed(self, user):
+        if not user.check_password(self.cleaned_data['password']):
+            raise forms.ValidationError("Incorrect password. Please try again.")
 
     class Meta:
         model = User
