@@ -1,7 +1,4 @@
-from django.conf import settings
-from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -51,8 +48,6 @@ class UserLoginView(LoginView):
 
         if not remember_me:
             self.request.session.set_expiry(0)
-            self.request.session.modified = True
-            settings.SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
         return super(UserLoginView, self).form_valid(form)
 
