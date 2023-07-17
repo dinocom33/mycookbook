@@ -1,5 +1,3 @@
-# from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth import get_user_model
 from autoslug import AutoSlugField
@@ -68,10 +66,10 @@ class Recipe(models.Model):
         verbose_name='Recipe Category',
     )
 
-    image_url = models.URLField(
+    image = models.ImageField(
+        upload_to='recipe_images',
         null=True,
         blank=True,
-        verbose_name='Image URL',
     )
 
     slug = AutoSlugField(
@@ -105,6 +103,10 @@ class FavoriteRecipeModel(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE
+    )
+
+    added_date = models.DateTimeField(
+        auto_now_add=True,
     )
 
     class Meta:

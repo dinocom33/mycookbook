@@ -6,10 +6,10 @@
     <div class="container">
         <h1>{{ recipe.title }}</h1>
         <p><strong>Category:</strong> {{ recipe.get_category_display }}</p>
-        {% if recipe.image_url %}
-            <img src="{{ recipe.image_url }}" alt="" width="600" height="400"/>
+        {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" alt="" width="600" height="400"/>
         {% else %}
-            <img src="/static/images/no-image-available.jpeg" alt="" width="600" height="400"/>
+            <img src="/static/images/no-image-available.jpeg" alt="" width="600" height="398"/>
         {% endif %}
         <p>Created by: {{ recipe.created_by }}</p>
         <p>Created at: {{ recipe.created_at }}</p>

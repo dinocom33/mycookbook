@@ -17,10 +17,10 @@
                             {% for recipe in recipes %}
                                 <div class="col-xs-12 col-sm-4">
                                     <div class="card">
-                                        {% if recipe.image_url %}
+                                        {% if recipe.image %}
                                             <a class="img-card"
                                                href="{% url 'recipe details' recipe.pk recipe.slug %}">
-                                                <img src="{{ recipe.image_url }}" alt=""/></a>
+                                                <img src="{{ recipe.image.url }}" alt=""/></a>
                                         {% else %}
                                             <a class="img-card"
                                                href="{% url 'recipe details' recipe.pk recipe.slug %}">

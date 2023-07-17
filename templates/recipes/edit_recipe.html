@@ -19,7 +19,7 @@
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Edit Recipe</legend>
             </fieldset>
-            <form method="POST" action="{% url 'edit recipe' recipe.pk recipe.slug%}">
+            <form method="POST" action="{% url 'edit recipe' recipe.pk recipe.slug%}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-6">
@@ -35,7 +35,7 @@
                         {{ form.category|as_crispy_field }}
                     </div>
                     <div class="col-6">
-                        {{ form.image_url|as_crispy_field }}
+                        {{ form.image|as_crispy_field }}
                     </div>
                     <div class="form-group py-3">
                         <button type="submit" class="btn btn-success">Save</button>

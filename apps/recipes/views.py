@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import redirect, get_object_or_404, render
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, DeleteView, UpdateView, ListView
 from django.views.generic.edit import FormMixin
@@ -9,16 +9,14 @@ from django.contrib import messages
 
 from apps.common.forms import CommentForm
 from apps.recipes.models import LikedRecipe, Rating
-from apps.recipes.forms import AddToFavoriteForm, RateForm
+from apps.recipes.forms import AddToFavoriteForm
 from apps.recipes.models import Recipe, FavoriteRecipeModel
 
 
 class CreateRecipeView(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title', 'ingredients', 'instructions', 'category', 'image_url']
+    fields = ['title', 'ingredients', 'instructions', 'category', 'image']
     template_name = 'recipes/create_recipe.html'
-
-    # success_url = reverse_lazy('my recipes')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -45,7 +43,7 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class EditRecipeView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Recipe
-    fields = ['title', 'ingredients', 'instructions', 'category', 'image_url']
+    fields = ['title', 'ingredients', 'instructions', 'category', 'image']
     template_name = 'recipes/edit_recipe.html'
 
     def get_success_url(self):
@@ -91,9 +89,7 @@ class RecipesDetailsView(FormMixin, DetailView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
-        # for recipe in Recipe.objects.all():
-        #     rating = Rating.objects.filter(recipe=recipe, user=self.request.user).first()
-        #     recipe.user_rating = rating.rating if rating else 0
+
         if form.is_valid():
             return self.form_valid(form)
         else:
@@ -210,7 +206,7 @@ class FavoriteListView(LoginRequiredMixin, ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return self.request.user.favorite_recipes.all().order_by('-updated_at')
+        return self.request.user.favorite_recipes.all().order_by('-favoriterecipemodel__added_date')
 
 
 @login_required
