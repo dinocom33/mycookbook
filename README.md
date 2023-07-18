@@ -34,7 +34,7 @@ Mycookbook is a website in wich a user can create a profile and share his favori
 
 ## Demo
 
-in progress....
+soon....
 
 ## Technologies
 
