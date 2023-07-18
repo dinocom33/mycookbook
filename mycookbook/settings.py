@@ -14,14 +14,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = str(os.getenv('SECRET_KEY'))
+SECRET_KEY = os.getenv('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', False)
 
 ALLOWED_HOSTS = []
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -81,11 +80,11 @@ WSGI_APPLICATION = 'mycookbook.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": str(os.getenv('DATABASE_NAME')),
-        "USER": str(os.getenv('DATABASE_USER')),
-        "PASSWORD": str(os.getenv('DATABASE_PASSWORD')),
-        "HOST": str(os.getenv('DATABASE_HOST')),
-        "PORT": str(os.getenv('DATABASE_PORT')),
+        "NAME": os.getenv('DATABASE_NAME', None),
+        "USER": os.getenv('DATABASE_USER', None),
+        "PASSWORD": os.getenv('DATABASE_PASSWORD', None),
+        "HOST": os.getenv('DATABASE_HOST', None),
+        "PORT": os.getenv('DATABASE_PORT', None),
     }
 }
 

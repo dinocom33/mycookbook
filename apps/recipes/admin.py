@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import Avg
 
 from apps.common.models import CommentsModel
 from apps.recipes.models import Recipe, FavoriteRecipeModel, LikedRecipe, Rating
@@ -6,7 +7,8 @@ from apps.recipes.models import Recipe, FavoriteRecipeModel, LikedRecipe, Rating
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_by', 'created_at', 'updated_at', 'likes_count', 'favorite_count', 'comments_count')
+    list_display = ('title', 'created_by', 'created_at', 'updated_at', 'likes_count',
+                    'favorite_count', 'comments_count', 'avg_rating')
     list_filter = ('created_by', 'created_at', 'updated_at', 'title')
     search_fields = ('created_by', 'created_at', 'updated_at', 'title')
     auto_populate_field = ('slug',)
@@ -44,7 +46,7 @@ class RecipeAdmin(admin.ModelAdmin):
             'Image',
             {
                 'fields': (
-                    'image_url',
+                    'image',
                 )
             }),
         (
@@ -79,6 +81,11 @@ class RecipeAdmin(admin.ModelAdmin):
         return CommentsModel.objects.filter(recipe=obj).count()
 
     comments_count.short_description = 'Comments'
+
+    def avg_rating(self, obj):
+        return Rating.objects.filter(recipe=obj).aggregate(Avg("rating"))["rating__avg"] or 0
+
+    avg_rating.short_description = 'AVG Rating'
 
 
 @admin.register(FavoriteRecipeModel)

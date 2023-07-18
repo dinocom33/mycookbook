@@ -148,7 +148,7 @@ class RecipeByCategoryView(ListView):
 
     def get_queryset(self):
         category = self.kwargs['category']
-        return Recipe.objects.filter(category=category).order_by('-updated_at')
+        return Recipe.objects.filter(category=category).order_by('-created_at')
 
 
 class AddToFavoritesView(LoginRequiredMixin, FormMixin, DetailView):

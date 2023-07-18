@@ -4,7 +4,7 @@ from autoslug import AutoSlugField
 from django.db.models import Avg
 from django.shortcuts import reverse
 
-from apps.recipes.validators import recipe_title_validator
+from apps.recipes.validators import recipe_title_validator, file_size_validator
 
 UserModel = get_user_model()
 
@@ -70,6 +70,9 @@ class Recipe(models.Model):
         upload_to='recipe_images',
         null=True,
         blank=True,
+        validators=[
+            file_size_validator,
+        ]
     )
 
     slug = AutoSlugField(
