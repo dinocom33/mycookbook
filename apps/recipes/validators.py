@@ -3,7 +3,7 @@ import re
 
 
 def recipe_title_validator(value):
-    if not re.match(r"^[a-zA-Zа-яА-Я_() -]*$", value):
+    if not re.match(r"^[a-zA-Zа-яА-Я_() ,.-]*$", value):
         raise ValidationError('Ensure title contains only letters(latin or cyrillic), '
                               'numbers, underscores, dashes and parentheses.')
 
