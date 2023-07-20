@@ -17,7 +17,7 @@
                     <li><a href="{% url 'recipe by category' category='salads' %}">Salads</a></li>
                     <li><a href="{% url 'recipe by category' category='soups' %}">Soups</a></li>
                     <li><a href="{% url 'recipe by category' category='main_dishes' %}">Main dishes</a></li>
-                    <li><a href="{% url 'recipe by category' category='desserts' %}">Desserts</a></li>
+                    <li><a href="{% url 'recipe by category' category='deserts' %}">Desserts</a></li>
                     <li><a href="{% url 'recipe by category' category='bbq' %}">BBQ</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{% url 'all recipes' %}">All recipes</a></li>
@@ -39,11 +39,11 @@
                         <img src="{{ user.profile.avatar.url }}" class="avatar">
                         {% firstof request.user.profile.get_full_name request.user.username %} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'edit profile' user.pk %}"><i class="fa fa-user-o"></i> Profile</a></li>
                         <li><a href="{% url 'my recipes' user.pk %}"><i class="fa-thin fa-pot-food"></i> My recipes</a></li>
                         <li><a href="{% url 'favorite recipes' request.user.pk %}"><i class="fa-thin fa-pot-food"></i> My Favorite Recipes</a></li>
                         <li><a href="{% url 'add recipe' %}"><i class="fa-thin fa-pot-food"></i> Add recipe</a></li>
                         <li class="divider"></li>
+                        <li><a href="{% url 'edit profile' user.pk %}"><i class="fa fa-user-o"></i> Profile</a></li>
                         <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
                         </li>
                     </ul>

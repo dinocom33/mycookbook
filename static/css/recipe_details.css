@@ -31,13 +31,12 @@ body {
 
 .recipe-card__ingredients {
     list-style: none;
-    margin: 0;
     padding: 0;
-    margin-left: 10px;
+    margin: 0 0 0 10px;
     column-count: 1;
 }
 
-li {
+.recipe-card__ingredients li {
     margin-bottom: 5px;
 }
 
@@ -47,7 +46,7 @@ li {
     border-bottom: 1px solid #eb9376;
 }
 
-li {
+.recipe-card__nav li {
     display: inline-block;
     margin-right: 30px
 }
@@ -81,7 +80,7 @@ h3:hover:after, h3.active:after {
     }
 
     .recipe-card__ingredients {
-        column-count: 2
+        column-count: 1
     }
 }
 
