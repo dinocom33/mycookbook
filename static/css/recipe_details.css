@@ -51,12 +51,12 @@ body {
     margin-right: 30px
 }
 
-h3 {
+.recipe-card__h3 {
     margin: 0;
     padding: 0;
 }
 
-h3:after {
+.recipe-card__nav h3:after {
     content: '';
     display: block;
     width: 0%;
@@ -66,11 +66,11 @@ h3:after {
     transition: width 250ms ease-in-out 0s;
 }
 
-h3:hover {
+.recipe-card__nav h3:hover {
     cursor: pointer;
 }
 
-h3:hover:after, h3.active:after {
+.recipe-card__nav h3:hover:after, h3.active:after {
     width: 100%;
 }
 
