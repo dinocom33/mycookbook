@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+
 {% block content %}
 
     <div class='recipe-card'>
@@ -15,7 +16,7 @@
             </div>>
         {% endif %}
         <div class="recipe-card__body rate-block">
-            <h4 class="card-subtitle heart-right">Avg rating:
+            <h4 class="card-subtitle heart-right">Avg rating !!!:
                 <span class="fa fa-star {% if recipe.average_rating > 0 %} checked {% endif %}"></span>
                 <span class="fa fa-star {% if recipe.average_rating > 1 %} checked {% endif %}"></span>
                 <span class="fa fa-star {% if recipe.average_rating > 2 %} checked {% endif %}"></span>
