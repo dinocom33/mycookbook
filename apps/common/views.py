@@ -22,15 +22,21 @@ class IndexView(ListView):
 
 class RegisterView(CreateView):
     form_class = RegisterForm
-    initial = {'key': 'value'}
+    # initial = {'key': 'value'}
     template_name = 'common/register.html'
     success_url = reverse_lazy('login')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(to='index')
+            return redirect('index')
 
         return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
 
 
 class UserLoginView(LoginView):
