@@ -85,6 +85,7 @@ EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS', 0)))
 EMAIL_PORT = os.getenv('EMAIL_PORT', 0)
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', None)
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', None)
+CONTACT_FORM_EMAIL = os.getenv('CONTACT_FORM_EMAIL', None)
 
 AUTH_PASSWORD_VALIDATORS = [
     {

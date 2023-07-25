@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form Submission</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f2f2f2; margin: 0; padding: 0;">
+<table cellpadding="0" cellspacing="0" width="100%"
+       style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <tr>
+        <td align="center" style="padding: 20px 0;">
+            <img src="https://yourwebsite.com/assets/logo.png" alt="Your Website Logo" width="150"
+                 style="display: block;">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 20px;">
+            <h1>New Contact Form Submission</h1>
+            <p>Name: {{ name }}</p>
+            <p>Email: {{ email }}</p>
+            <p>Subject: {{ subject }}</p>
+            <p>Message: {{ message }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="padding: 20px 0; background-color: #f2f2f2;">
+            <p style="color: #888888; font-size: 12px;">This email was sent from the contact form on your website. Do
+                not reply to this email.</p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
