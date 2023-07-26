@@ -64,7 +64,7 @@
                         </svg>
                     {% endif %}
                 </a>
-            Total likes: {{ recipe.likedrecipe_set.count }}
+             {{ recipe.likedrecipe_set.count }} likes
             </span>
         </div>
 
@@ -80,6 +80,10 @@
                         <h3 href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'method')">
                             Instructions</h3>
                     </li>
+                    <li>
+                        <h3 href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'author')">
+                            Author</h3>
+                    </li>
                 </ul>
                 <div id="ingredients" class="tabcontent">
                     <ul class="recipe-card__ingredients">
@@ -91,8 +95,19 @@
                         <li>{{ recipe.instructions|linebreaks }}</li>
                     </ul>
                 </div>
+                <div id="author" class="tabcontent">
+                    <h2>Author</h2>
+                    <hr>
+                    <img src="{{ recipe.created_by.profile.avatar.url }}" alt="Author image">
+                    <p><strong>{{ recipe.created_by.profile.get_full_name }}</strong></p>
+                    {% if recipe.created_by.profile.bio %}
+                        <p>{{ recipe.created_by.profile.bio }}</p>
+                    {% else %}
+                        <p>No information about the author</p>
+                    {% endif %}
+                </div>
             </div>
-
+            <ul class="recipe-card__nav"></ul>
             <div class="recipe-card__body">
                 {% if request.user.is_authenticated %}
                     <div>
@@ -159,7 +174,7 @@
                         <button class="btn btn-danger mt-3">Delete</button>
                     </a>
                 {% endif %}
-                <input class="btn btn-info" type="button" onclick="printDiv('printableArea')" value="Print"/>
+                <input class="btn" type="button" onclick="printDiv('printableArea')" value="Print"/>
                 <input class="btn" type="button" value="Back" onclick="history.back()">
             </div>
         </div>
