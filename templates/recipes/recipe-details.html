@@ -99,7 +99,7 @@
                     <h2>Author</h2>
                     <hr>
                     <img src="{{ recipe.created_by.profile.avatar.url }}" alt="Author image">
-                    <p><strong>{{ recipe.created_by.profile.get_full_name }}</strong></p>
+                    <p><strong>{% firstof recipe.created_by.profile.get_full_name recipe.created_by.username %}</strong></p>
                     {% if recipe.created_by.profile.bio %}
                         <p>{{ recipe.created_by.profile.bio }}</p>
                     {% else %}
