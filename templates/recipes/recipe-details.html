@@ -99,7 +99,8 @@
                     <h2>Author</h2>
                     <hr>
                     <img src="{{ recipe.created_by.profile.avatar.url }}" alt="Author image">
-                    <p><strong>{% firstof recipe.created_by.profile.get_full_name recipe.created_by.username %}</strong></p>
+                    <p><strong>{% firstof recipe.created_by.profile.get_full_name recipe.created_by.username %}</strong>
+                    </p>
                     {% if recipe.created_by.profile.bio %}
                         <p>{{ recipe.created_by.profile.bio }}</p>
                     {% else %}
@@ -135,9 +136,9 @@
                             <button type="submit" class="btn btn-primary">Add to My Favorites</button>
                         </form>
                     {% else %}
-                        <form method="post" action="{% url 'remove from favorites' recipe.pk recipe.slug %}">
+                        <form method="post" action="{% url 'add to favorites' recipe.pk recipe.slug %}">
                             {% csrf_token %}
-                            {{ remove_from_favorite_form }}
+                            {{ add_to_favorite_form }}
                             <button type="submit" class="btn btn-primary">Remove from Favorites</button>
                         </form>
                     {% endif %}
@@ -210,4 +211,33 @@
             document.body.innerHTML = originalContents;
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.like-button').on('click', function (e) {
+                e.preventDefault();
+                var url = $(this).data('url');
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.is_liked) {
+                            $('.like-icon').addClass('liked');
+                        } else {
+                            $('.like-icon').removeClass('liked');
+                        }
+                        $('.like-count').text(data.like_count);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

@@ -82,7 +82,8 @@ class RecipesDetailsView(FormMixin, DetailView):
             context['added_to_favorite'] = FavoriteRecipeModel.objects.filter(
                 user=self.request.user,
                 recipe__pk=self.kwargs['pk']).exists()
-            context['avg_rating'] = Rating.objects.filter(recipe=self.object).aggregate(Avg("rating"))["rating__avg"] or 0
+            context['avg_rating'] = Rating.objects.filter(recipe=self.object).aggregate(Avg("rating"))[
+                                        "rating__avg"] or 0
 
         return context
 
@@ -151,7 +152,7 @@ class RecipeByCategoryView(ListView):
         return Recipe.objects.filter(category=category).order_by('-created_at')
 
 
-class AddToFavoritesView(LoginRequiredMixin, FormMixin, DetailView):
+class AddRemoveFavoritesView(LoginRequiredMixin, FormMixin, DetailView):
     model = Recipe
     form_class = AddToFavoriteForm
     template_name = 'recipes/recipe-details.html'
@@ -171,26 +172,7 @@ class AddToFavoritesView(LoginRequiredMixin, FormMixin, DetailView):
             favorite = FavoriteRecipeModel(user=user, recipe=recipe)
             favorite.save()
             messages.info(request, "This recipe was added to favorites.")
-
-        return redirect('recipe details', pk=recipe_pk, slug=recipe.slug)
-
-
-class RemoveFromFavoritesView(LoginRequiredMixin, FormMixin, DetailView):
-    model = Recipe
-    form_class = AddToFavoriteForm
-    template_name = 'recipes/recipe-details.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['remove_from_favorite_form'] = AddToFavoriteForm()
-
-        return context
-
-    def post(self, request, *args, **kwargs):
-        recipe_pk = self.kwargs['pk']
-        user = request.user
-
-        if FavoriteRecipeModel.objects.filter(user=user, recipe__pk=recipe_pk).exists():
+        else:
             recipe = Recipe.objects.get(pk=recipe_pk)
             favorite = FavoriteRecipeModel.objects.get(user=user, recipe=recipe)
             favorite.delete()
@@ -226,7 +208,8 @@ def hit_like_button(request, pk, slug):
         liked_recipe.save()
         messages.info(request, "This recipe was liked.")
 
-    return redirect('recipe details', pk=recipe.pk, slug=recipe.slug)
+    # return redirect('recipe details', pk=recipe.pk, slug=recipe.slug)
+    return redirect(request.META['HTTP_REFERER'] + f"#{recipe}")
 
 
 @login_required
@@ -243,4 +226,5 @@ def rate_recipe_view(request, pk, slug):
         recipe_rating.rating = rating
         recipe_rating.save()
 
-    return redirect('recipe details', pk=recipe.pk, slug=recipe.slug)
+    # return redirect('recipe details', pk=recipe.pk, slug=recipe.slug)
+    return redirect(request.META['HTTP_REFERER'] + f"#{recipe}")

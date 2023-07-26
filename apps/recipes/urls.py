@@ -1,8 +1,8 @@
 from django.urls import path
 
 from .views import CreateRecipeView, MyRecipesView, RecipesDetailsView, AllRecipeListView, MyRecipesDetailsView, \
-    SearchResultsView, RecipeByCategoryView, EditRecipeView, RecipeDeleteView, AddToFavoritesView, FavoriteListView, \
-    hit_like_button, RemoveFromFavoritesView, rate_recipe_view
+    SearchResultsView, RecipeByCategoryView, EditRecipeView, RecipeDeleteView, AddRemoveFavoritesView, FavoriteListView, \
+    hit_like_button, rate_recipe_view
 
 urlpatterns = [
     path('all-recipes/', AllRecipeListView.as_view(), name='all recipes'),
@@ -11,8 +11,7 @@ urlpatterns = [
     path('my-recipes/<int:pk>/', MyRecipesView.as_view(), name='my recipes'),
     path('my-recipe-details/<int:pk>/<slug:slug>/', MyRecipesDetailsView.as_view(),
          name='my recipe details'),
-    path('my-favorites/add/<int:pk>/<slug:slug>/', AddToFavoritesView.as_view(), name='add to favorites'),
-    path('my-favorites/remove/<int:pk>/<slug:slug>/', RemoveFromFavoritesView.as_view(), name='remove from favorites'),
+    path('my-favorites/add/<int:pk>/<slug:slug>/', AddRemoveFavoritesView.as_view(), name='add to favorites'),
     path('rate/<int:pk>/<slug:slug>/', rate_recipe_view, name='rate recipe'),
     path('my-favorites/<int:pk>/', FavoriteListView.as_view(), name='favorite recipes'),
     path('category/<str:category>/', RecipeByCategoryView.as_view(), name='recipe by category'),
