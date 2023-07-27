@@ -39,7 +39,7 @@ def edit_profile(request, pk):
 
 class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     form_class = ChangePasswordForm
-    template_name = 'user_profile/change_password.html'
+    template_name = 'registration/change_password.html'
     success_message = "Successfully Changed Your Password. Please login with your new password."
     success_url = reverse_lazy('logout')
 
