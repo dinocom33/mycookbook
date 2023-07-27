@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 
 from django.contrib.auth.models import User
 from .models import Profile
@@ -52,3 +52,10 @@ class ChangePasswordForm(PasswordChangeForm):
     class Meta:
         model = get_user_model()
         fields = ['old_password', 'new_password1', 'new_password2']
+
+
+class ResetPasswordForm(PasswordResetForm):
+
+    class Meta:
+        model = get_user_model()
+        fields = ['new_password1', 'new_password2']
