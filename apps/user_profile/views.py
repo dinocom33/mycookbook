@@ -4,10 +4,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.contrib.messages.views import SuccessMessageMixin
 
-from .forms import UpdateUserForm, UpdateProfileForm
+from .forms import UpdateUserForm, UpdateProfileForm, ChangePasswordForm
 
 
 @login_required
@@ -38,6 +38,22 @@ def edit_profile(request, pk):
 
 
 class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+    form_class = ChangePasswordForm
     template_name = 'user_profile/change_password.html'
-    success_message = "Successfully Changed Your Password"
-    success_url = reverse_lazy('edit profile')
+    success_message = "Successfully Changed Your Password. Please login with your new password."
+    success_url = reverse_lazy('logout')
+
+
+class ResetPasswordView(PasswordResetView):
+    template_name = 'user_profile/reset_password.html'
+    success_url = reverse_lazy('login')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('index')
+        return super().dispatch(request, *args, **kwargs)
+
+
+class ResetPasswordConfirm(PasswordResetConfirmView):
+    template_name = 'user_profile/reset-password-confirm.html'
+    success_url = reverse_lazy('login')
