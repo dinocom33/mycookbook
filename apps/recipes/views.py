@@ -44,7 +44,7 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class EditRecipeView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Recipe
     fields = ['title', 'ingredients', 'instructions', 'category', 'image']
-    template_name = 'recipes/edit_recipe.html'
+    template_name = 'recipes/edit-recipe.html'
 
     def get_success_url(self):
         return reverse_lazy('recipe details', kwargs={'pk': self.object.pk, 'slug': self.object.slug})

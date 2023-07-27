@@ -45,7 +45,7 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
 
 
 class ResetPasswordView(PasswordResetView):
-    template_name = 'user_profile/reset_password.html'
+    template_name = 'user_profile/reset-password.html'
     success_url = reverse_lazy('login')
 
     def dispatch(self, request, *args, **kwargs):
@@ -56,4 +56,10 @@ class ResetPasswordView(PasswordResetView):
 
 class ResetPasswordConfirm(PasswordResetConfirmView):
     template_name = 'user_profile/reset-password-confirm.html'
+    email_template_name = 'registration/password_reset_email.html'
     success_url = reverse_lazy('login')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('index')
+        return super().dispatch(request, *args, **kwargs)
