@@ -46,6 +46,10 @@ body {
     margin-right: 5px;
 }
 
+.navbar .navbar-brand b {
+    color: #AF0808;
+}
+
 .search-box {
     position: relative;
 }
