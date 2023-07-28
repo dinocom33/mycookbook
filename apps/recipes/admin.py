@@ -7,9 +7,9 @@ from apps.recipes.models import Recipe, FavoriteRecipeModel, LikedRecipe, Rating
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_by', 'created_at', 'updated_at', 'likes_count',
+    list_display = ('title', 'category', 'created_by', 'created_at', 'updated_at', 'likes_count',
                     'favorite_count', 'comments_count', 'avg_rating')
-    list_filter = ('created_by', 'created_at', 'updated_at', 'title')
+    list_filter = ('category', 'created_by', 'created_at', 'updated_at', 'title')
     search_fields = ('created_by', 'created_at', 'updated_at', 'title')
     auto_populate_field = ('slug',)
     readonly_fields = ('created_at', 'updated_at', 'slug')

@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, DeleteView, UpdateView, ListView
@@ -191,6 +192,26 @@ class FavoriteListView(LoginRequiredMixin, ListView):
         return self.request.user.favorite_recipes.all().order_by('-favoriterecipemodel__added_date')
 
 
+# @login_required
+# def hit_like_button(request, pk, slug):
+#     recipe = get_object_or_404(Recipe, pk=pk, slug=slug)
+#     user = request.user
+#
+#     liked_recipe, created = LikedRecipe.objects.get_or_create(
+#         recipe=recipe,
+#         user=user
+#     )
+#
+#     if not created:
+#         liked_recipe.delete()
+#         messages.info(request, "This recipe was disliked.")
+#     else:
+#         liked_recipe.save()
+#         messages.info(request, "This recipe was liked.")
+#
+#     # return redirect('recipe details', pk=recipe.pk, slug=recipe.slug)
+#     return redirect(request.META['HTTP_REFERER'] + f"#{recipe}")
+
 @login_required
 def hit_like_button(request, pk, slug):
     recipe = get_object_or_404(Recipe, pk=pk, slug=slug)
@@ -203,13 +224,17 @@ def hit_like_button(request, pk, slug):
 
     if not created:
         liked_recipe.delete()
-        messages.info(request, "This recipe was disliked.")
+        liked = False
     else:
         liked_recipe.save()
-        messages.info(request, "This recipe was liked.")
+        liked = True
 
-    # return redirect('recipe details', pk=recipe.pk, slug=recipe.slug)
-    return redirect(request.META['HTTP_REFERER'] + f"#{recipe}")
+    data = {
+        'liked': liked,
+        'like_count': recipe.likedrecipe_set.count(),
+    }
+
+    return JsonResponse(data)
 
 
 @login_required

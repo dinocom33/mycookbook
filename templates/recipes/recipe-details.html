@@ -22,50 +22,69 @@
                 <span class="fa fa-star {% if recipe.average_rating > 3 %} checked {% endif %}"></span>
                 <span class="fa fa-star {% if recipe.average_rating > 4 %} checked {% endif %}"></span>
             </h4>
+            {#            <span class="heart heart-right">#}
+            {#                <a href="{% url 'like recipe' recipe.pk recipe.slug %}">#}
+            {#                    {% if liked_recipe %}#}
+            {#                        <svg style="color: red"#}
+            {#                             xmlns="http://www.w3.org/2000/svg"#}
+            {#                             width="24"#}
+            {#                             height="24"#}
+            {#                             fill="currentColor"#}
+            {#                             class="bi bi-heart-fill"#}
+            {#                             viewBox="0 0 16 16">#}
+            {#                        <!-- Coordinate path -->#}
+            {#                        <path fill-rule="evenodd"#}
+            {#                              d="M8 1.314C12.438-3.248 23.534 4.735#}
+            {#                              8 15-7.534 4.736 3.562-3.248 8 1.314z"#}
+            {#                              fill="red">#}
+            {#                        </path>#}
+            {#                        </svg>#}
+            {#                    {% else %}#}
+            {#                        <svg aria-label="Like"#}
+            {#                             color="#262626"#}
+            {#                             fill="#262626"#}
+            {#                             height="24"#}
+            {#                             role="img"#}
+            {#                             viewBox="0 0 48 48"#}
+            {#                             width="24">#}
+            {#                            <!-- Coordinate path -->#}
+            {#                            <path d="M34.6 6.1c5.7 0 10.4 5.2 10.4#}
+            {#                                        11.5 0 6.8-5.9 11-11.5 16S25 41.3 24#}
+            {#                                        41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3#}
+            {#                                        11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3#}
+            {#                                        1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9#}
+            {#                                        1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9#}
+            {#                                        1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1#}
+            {#                                        0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3#}
+            {#                                        1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3#}
+            {#                                        1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2#}
+            {#                                        7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6#}
+            {#                                        48 25 48 17.6c0-8-6-14.5-13.4-14.5z">#}
+            {#                            </path>#}
+            {#                        </svg>#}
+            {#                    {% endif %}#}
+            {#                </a>#}
+            {#             {{ recipe.likedrecipe_set.count }} likes#}
+            {#            </span>#}
             <span class="heart heart-right">
-                <a href="{% url 'like recipe' recipe.pk recipe.slug %}">
+                <button class="like-button" data-url="{% url 'like recipe' recipe.pk recipe.slug %}">
                     {% if liked_recipe %}
-                        <svg style="color: red"
-                             xmlns="http://www.w3.org/2000/svg"
-                             width="24"
-                             height="24"
-                             fill="currentColor"
-                             class="bi bi-heart-fill"
-                             viewBox="0 0 16 16">
-                        <!-- Coordinate path -->
-                        <path fill-rule="evenodd"
-                              d="M8 1.314C12.438-3.248 23.534 4.735
-                              8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                              fill="red">
-                        </path>
+                        <svg style="color: red" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                             class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <!-- Coordinate path -->
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                                  fill="red"></path>
                         </svg>
                     {% else %}
-                        <svg aria-label="Like"
-                             color="#262626"
-                             fill="#262626"
-                             height="24"
-                             role="img"
-                             viewBox="0 0 48 48"
-                             width="24">
+                        <svg aria-label="Like" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 48 48" width="24">
                             <!-- Coordinate path -->
-                            <path d="M34.6 6.1c5.7 0 10.4 5.2 10.4
-                                        11.5 0 6.8-5.9 11-11.5 16S25 41.3 24
-                                        41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3
-                                        11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3
-                                        1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9
-                                        1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9
-                                        1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1
-                                        0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3
-                                        1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3
-                                        1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2
-                                        7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6
-                                        48 25 48 17.6c0-8-6-14.5-13.4-14.5z">
-                            </path>
+                            <path d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
                         </svg>
                     {% endif %}
-                </a>
-             {{ recipe.likedrecipe_set.count }} likes
+                </button>
+                <span class="like-count">{{ recipe.likedrecipe_set.count }} likes</span>
             </span>
+
         </div>
 
         <div class="recipe-card__body">
@@ -211,33 +230,56 @@
             document.body.innerHTML = originalContents;
         }
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('.like-button').on('click', function (e) {
-                e.preventDefault();
-                var url = $(this).data('url');
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: {
-                        csrfmiddlewaretoken: '{{ csrf_token }}',
+        // Function to handle the like/unlike action
+        function handleLikeButton() {
+            const likeButton = document.querySelector('.like-button');
+            const likeCount = document.querySelector('.like-count');
+
+            likeButton.addEventListener('click', function () {
+                const url = likeButton.getAttribute('data-url');
+
+                // Send a POST request to the URL to like/unlike the recipe
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
                     },
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.is_liked) {
-                            $('.like-icon').addClass('liked');
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.liked) {
+                            // Recipe was liked
+                            likeButton.innerHTML = '<svg style="color: red" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" fill="red"></path></svg>';
                         } else {
-                            $('.like-icon').removeClass('liked');
+                            // Recipe was unliked
+                            likeButton.innerHTML = '<svg aria-label="Like" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 48 48" width="24"><path d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>';
                         }
-                        $('.like-count').text(data.like_count);
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(error);
-                    }
-                });
+                        likeCount.textContent = data.like_count + ' likes';
+                    })
+                    .catch(error => console.error('Error:', error));
             });
-        });
+
+            // Function to get the CSRF token from the cookies
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        }
+
+        // Call the function when the document is loaded
+        document.addEventListener('DOMContentLoaded', handleLikeButton);
     </script>
 
 {% endblock %}
