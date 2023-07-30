@@ -115,6 +115,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static/",
 ]
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = reverse_lazy('edit profile')
 LOGIN_URL = reverse_lazy('login')

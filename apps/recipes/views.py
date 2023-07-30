@@ -17,7 +17,7 @@ from apps.recipes.models import Recipe, FavoriteRecipeModel
 class CreateRecipeView(LoginRequiredMixin, CreateView):
     model = Recipe
     fields = ['title', 'ingredients', 'instructions', 'category', 'image']
-    template_name = 'recipes/create_recipe.html'
+    template_name = 'recipes/create-recipe.html'
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -184,7 +184,7 @@ class AddRemoveFavoritesView(LoginRequiredMixin, FormMixin, DetailView):
 
 class FavoriteListView(LoginRequiredMixin, ListView):
     model = FavoriteRecipeModel
-    template_name = 'recipes/favorite_list.html'
+    template_name = 'recipes/favorite-list.html'
     context_object_name = 'favorites'
     paginate_by = 6
 

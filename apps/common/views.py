@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView
 
+from mycookbook import settings
 from .forms import RegisterForm, LoginForm, ContactForm
 
 from ..recipes.models import Recipe
@@ -51,8 +52,8 @@ class UserLoginView(LoginView):
     def form_valid(self, form):
         remember_me = form.cleaned_data.get('remember_me')
 
-        if not remember_me:
-            self.request.session.set_expiry(0)
+        if remember_me:
+            self.request.session.set_expiry(1209600)  # two weeks
 
         return super(UserLoginView, self).form_valid(form)
 
