@@ -1,7 +1,9 @@
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
 from django.urls import reverse_lazy
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

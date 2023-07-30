@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 admin.site.site_header = 'My cookbook Administration'
+admin.site.site_title = 'My cookbook Administration'
 admin.site.index_title = 'My cookbook App'
 
 urlpatterns = [
