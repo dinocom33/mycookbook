@@ -19,7 +19,6 @@
         {% endif %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Add Recipe</legend>
-            {#                {{ form|crispy }}#}
         </fieldset>
         <form method="POST" action="{% url 'add recipe' %}" enctype="multipart/form-data">
             {% csrf_token %}
@@ -36,9 +35,6 @@
                 <div class="col-6">
                     {{ form.category|as_crispy_field }}
                 </div>
-{#                <div class="col-6">#}
-{#                    {{ form.image_url|as_crispy_field }}#}
-{#                </div>#}
                 <div class="col-6">
                     {{ form.image|as_crispy_field }}
                 </div>

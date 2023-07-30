@@ -22,7 +22,6 @@ class IndexView(ListView):
 
 class RegisterView(CreateView):
     form_class = RegisterForm
-    # initial = {'key': 'value'}
     template_name = 'common/register.html'
     success_url = reverse_lazy('login')
 

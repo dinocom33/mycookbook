@@ -1,5 +1,0 @@
-<form method="post" action="{% url 'comment recipe' recipe.pk recipe.slug %}">
-    {{ comment_form }}
-    <button type="submit">Post</button>
-    {% csrf_token %}
-</form>
