@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -6,8 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import DeleteView
 
 from .forms import UpdateUserForm, UpdateProfileForm, ChangePasswordForm, ResetPasswordForm
+
+UserModel = get_user_model()
 
 
 @login_required
@@ -53,3 +57,14 @@ class ResetPasswordView(PasswordResetView):
         if request.user.is_authenticated:
             return redirect('index')
         return super().dispatch(request, *args, **kwargs)
+
+
+class DeleteUserView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+    model = UserModel
+    template_name = 'user_profile/user-confirm-delete.html'
+    success_message = f"Successfully deleted your account."
+    success_url = reverse_lazy('index')
+
+    def test_func(self):
+
+        return self.request.user == UserModel.objects.get(pk=self.kwargs['pk'])

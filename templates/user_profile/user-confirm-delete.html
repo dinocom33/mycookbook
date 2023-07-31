@@ -5,12 +5,11 @@
         <div class="container-fostrap">
             <h1>Confirm Delete</h1>
 
-            <p>Are you sure you want to delete the recipe "{{ recipe.title }}"?</p>
+            <p>Are you sure you want to delete your account "{{ user.username }}"?</p>
 
             <form method="post">
                 {% csrf_token %}
                 <button class="btn btn-danger" type="submit">Delete</button>
-{#                <a href="{% url 'my recipes' request.user.pk %}">Cancel</a>#}
                 <input class="btn" type="button" value="Cancel" onclick="history.back()">
             </form>
         </div>
