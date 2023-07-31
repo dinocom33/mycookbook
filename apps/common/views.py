@@ -80,3 +80,18 @@ def contact_view(request):
     }
 
     return render(request, 'common/contact.html', context)
+
+
+def bad_request(request, exception):
+    context = {}
+    return render(request, '404.html', context, status=400)
+
+
+def permission_denied(request, exception):
+    context = {}
+    return render(request, '404.html', context, status=403)
+
+
+def server_error(request):
+    context = {}
+    return render(request, '500.html', context, status=500)
