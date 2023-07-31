@@ -112,6 +112,7 @@ body {
 
 @media print {
     .tabcontent {
-        display: block;
+        display: block !important;
+        page-break-after: always;
     }
 }
