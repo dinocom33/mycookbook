@@ -76,11 +76,8 @@ class Contact(models.Model):
         blank=False,
         verbose_name='Email',
         validators=[
-            EmailValidator,
+            EmailValidator(message='Please, enter a valid email address!'),
         ],
-        error_messages={
-            'invalid': 'Please, enter a valid email address!',
-        }
     )
 
     subject = models.CharField(

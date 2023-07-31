@@ -7,21 +7,20 @@ from apps.common.models import Contact
 
 class ContactModelTest(TestCase):
     def test_contact_model_creation_with_required_fields(self):
-        # Create a contact form with required fields
+
         contact = Contact.objects.create(
             email='test@example.com',
             subject='Test Subject',
             message='This is a test message.',
         )
 
-        # Check that the contact form is created successfully
         self.assertEqual(contact.email, 'test@example.com')
         self.assertEqual(contact.subject, 'Test Subject')
         self.assertEqual(contact.message, 'This is a test message.')
         self.assertIsInstance(contact.date_sent, timezone.datetime)
 
     def test_contact_model_creation_with_optional_fields(self):
-        # Create a contact form with optional fields
+
         contact = Contact.objects.create(
             first_name='John',
             last_name='Doe',
@@ -30,7 +29,6 @@ class ContactModelTest(TestCase):
             message='This is a test message.',
         )
 
-        # Check that the contact form is created successfully
         self.assertEqual(contact.first_name, 'John')
         self.assertEqual(contact.last_name, 'Doe')
         self.assertEqual(contact.email, 'test@example.com')
@@ -39,7 +37,7 @@ class ContactModelTest(TestCase):
         self.assertIsInstance(contact.date_sent, timezone.datetime)
 
     def test_contact_model_str_representation_with_full_name(self):
-        # Create a contact form with first name, last name, and email
+
         contact = Contact.objects.create(
             first_name='John',
             last_name='Doe',
@@ -48,18 +46,16 @@ class ContactModelTest(TestCase):
             message='This is a test message.',
         )
 
-        # Check that the str representation includes the full name
         self.assertEqual(str(contact), 'John Doe')
 
     def test_contact_model_str_representation_with_email_only(self):
-        # Create a contact form with only the email
+
         contact = Contact.objects.create(
             email='test@example.com',
             subject='Test Subject',
             message='This is a test message.',
         )
 
-        # Check that the str representation includes the email
         self.assertEqual(str(contact), 'test@example.com')
 
     def test_contact_model_validation_with_invalid_email(self):
