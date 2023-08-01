@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views import View
 from django.views.generic import DeleteView
 
 from .forms import UpdateUserForm, UpdateProfileForm, ChangePasswordForm, ResetPasswordForm
@@ -15,31 +16,36 @@ from .forms import UpdateUserForm, UpdateProfileForm, ChangePasswordForm, ResetP
 UserModel = get_user_model()
 
 
-@login_required
-def edit_profile(request, pk):
-    user = User.objects.filter(pk=pk).get()
-    profile = user.profile
+class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, View):
 
-    if request.method == 'GET':
-        user_form = UpdateUserForm(instance=user)
-        profile_form = UpdateProfileForm(instance=profile)
-    else:
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(pk=self.kwargs['pk'])
         user_form = UpdateUserForm(request.POST, instance=user)
-        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=user.profile)
-
-        if profile_form.is_valid() and user_form.is_valid():
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your profile has been updated successfully')
-            return redirect(to='edit profile', pk=pk)
+            return redirect('edit profile', pk=request.user.pk)
 
-    context = {
-        'user_form': user_form,
-        'profile_form': profile_form,
-        'user': user,
-    }
+    def get(self, request, *args, **kwargs):
+        user = UserModel.objects.get(pk=self.kwargs['pk'])
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user.profile)
 
-    return render(request, 'user_profile/edit-profile.html', context)
+        context = {
+            'user_form': user_form,
+            'profile_form': profile_form,
+            'user': user
+        }
+
+        return render(request, 'user_profile/edit-profile.html', context)
+
+    def test_func(self):
+        return self.request.user == UserModel.objects.get(pk=self.kwargs['pk'])
+
+    def handle_no_permission(self):
+        raise Http404
 
 
 class ChangePasswordView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, PasswordChangeView):

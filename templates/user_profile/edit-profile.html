@@ -59,7 +59,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
-                            <a class="col-md-7" href="{% url 'password change' %}">Change Password</a>
+                            <a class="col-md-7" href="{% url 'password change' user.pk %}">Change Password</a>
                             <a class="col-md-7" href="{% url 'delete account' user.pk %}">Delete Account</a>
                         </div>
                     </div>

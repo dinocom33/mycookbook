@@ -10,7 +10,7 @@
                     background-size:cover; height: 500px">
             </div>
         {% else %}
-            <div style="background:url('/static/images/no-image-available.jpeg') no-repeat 50% 50%;
+            <div style="background:url('{% static 'images/no-image-available.jpeg' %}') no-repeat 50% 50%;
                     background-size:cover; height: 500px">
             </div>
         {% endif %}

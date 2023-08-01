@@ -35,7 +35,7 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         recipe = self.get_object()
-        return self.request.user == recipe.created_by or self.request.user.is_staff
+        return self.request.user == recipe.created_by or self.request.user.is_staff or self.request.user.is_superuser
 
     def handle_no_permission(self):
         raise Http404()
@@ -55,7 +55,7 @@ class EditRecipeView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         recipe = self.get_object()
-        return self.request.user == recipe.created_by or self.request.user.is_staff
+        return self.request.user == recipe.created_by or self.request.user.is_staff or self.request.user.is_superuser
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -175,12 +175,12 @@ class AddRemoveFavoritesView(LoginRequiredMixin, FormMixin, DetailView):
         user = request.user
 
         if not FavoriteRecipeModel.objects.filter(user=user, recipe__pk=recipe_pk).exists():
-            recipe = Recipe.objects.get(pk=recipe_pk)
+            recipe = Recipe.objects.filter(pk=recipe_pk).get()
             favorite = FavoriteRecipeModel(user=user, recipe=recipe)
             favorite.save()
             messages.info(request, "This recipe was added to favorites.")
         else:
-            recipe = Recipe.objects.get(pk=recipe_pk)
+            recipe = Recipe.objects.filter(pk=recipe_pk).get()
             favorite = FavoriteRecipeModel.objects.get(user=user, recipe=recipe)
             favorite.delete()
             messages.info(request, "This recipe was removed from favorites.")
