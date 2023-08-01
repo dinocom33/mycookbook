@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, DeleteView, UpdateView, ListView
@@ -37,6 +37,9 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         recipe = self.get_object()
         return self.request.user == recipe.created_by or self.request.user.is_staff
 
+    def handle_no_permission(self):
+        raise Http404()
+
     def get_success_url(self):
         user_pk = self.request.user.pk
         return reverse_lazy('my recipes', kwargs={'pk': user_pk})
@@ -57,6 +60,9 @@ class EditRecipeView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
+
+    def handle_no_permission(self):
+        raise Http404()
 
 
 class AllRecipeListView(ListView):

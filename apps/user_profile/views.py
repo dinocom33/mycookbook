@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -38,14 +39,20 @@ def edit_profile(request, pk):
         'user': user,
     }
 
-    return render(request, 'user_profile/profile.html', context)
+    return render(request, 'user_profile/edit-profile.html', context)
 
 
-class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+class ChangePasswordView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, PasswordChangeView):
     form_class = ChangePasswordForm
     template_name = 'registration/change_password.html'
     success_message = "Successfully Changed Your Password. Please login with your new password."
     success_url = reverse_lazy('logout')
+
+    def test_func(self):
+        return self.request.user == UserModel.objects.get(pk=self.kwargs['pk'])
+
+    def handle_no_permission(self):
+        raise Http404
 
 
 class ResetPasswordView(PasswordResetView):
@@ -66,5 +73,7 @@ class DeleteUserView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
     success_url = reverse_lazy('index')
 
     def test_func(self):
-
         return self.request.user == UserModel.objects.get(pk=self.kwargs['pk'])
+
+    def handle_no_permission(self):
+        raise Http404

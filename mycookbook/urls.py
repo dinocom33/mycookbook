@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 admin.site.site_header = 'My cookbook Administration'
 admin.site.site_title = 'My cookbook Administration'
@@ -14,7 +15,7 @@ urlpatterns = [
                   path('recipes/', include('apps.recipes.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if not settings.DEBUG:
-    handler400 = 'apps.common.views.bad_request'
-    handler403 = 'apps.common.views.permission_denied'
-    handler500 = 'apps.common.views.server_error'
+
+handler400 = TemplateView.as_view(template_name='404.html')
+handler403 = TemplateView.as_view(template_name='404.html')
+handler500 = TemplateView.as_view(template_name='500.html')

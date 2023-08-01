@@ -4,7 +4,6 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView
 
-from mycookbook import settings
 from .forms import RegisterForm, LoginForm, ContactForm
 
 from ..recipes.models import Recipe
@@ -52,8 +51,8 @@ class UserLoginView(LoginView):
     def form_valid(self, form):
         remember_me = form.cleaned_data.get('remember_me')
 
-        if remember_me:
-            self.request.session.set_expiry(1209600)  # two weeks
+        if not remember_me:
+            self.request.session.set_expiry(0)
 
         return super(UserLoginView, self).form_valid(form)
 
@@ -80,18 +79,3 @@ def contact_view(request):
     }
 
     return render(request, 'common/contact.html', context)
-
-
-def bad_request(request, exception):
-    context = {}
-    return render(request, '404.html', context, status=400)
-
-
-def permission_denied(request, exception):
-    context = {}
-    return render(request, '404.html', context, status=403)
-
-
-def server_error(request):
-    context = {}
-    return render(request, '500.html', context, status=500)
