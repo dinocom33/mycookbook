@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="container my-3 p-3">
+    <div class="container my-3 p-3" style="margin-top: 80px">
         {% csrf_token %}
         {% if form.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">

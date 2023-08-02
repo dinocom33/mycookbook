@@ -3,30 +3,34 @@
 {% block title %} Login{% endblock title %}
 
 {% block content %}
-    <div class="login-form">
-        <form action="{% url 'login' %}" method="post" novalidate>
-            {% csrf_token %}
-            <h2 class="text-center">Log in</h2>
-            <div class="form-group">
-                <label class="small mb-1">Username</label>
-                {{ form.username }}
-                <strong style="color: #AF0808">{{ form.username.errors }}</strong>
+    <section class="wrapper" style="margin-top: 50px">
+        <div class="container-fostrap">
+            <div class="login-form">
+                <form action="{% url 'login' %}" method="post" novalidate>
+                    {% csrf_token %}
+                    <h2 class="text-center">Log in</h2>
+                    <div class="form-group">
+                        <label class="small mb-1">Username</label>
+                        {{ form.username }}
+                        <strong style="color: #AF0808">{{ form.username.errors }}</strong>
+                    </div>
+                    <div class="form-group">
+                        <label class="small mb-1">Password</label>
+                        {{ form.password }}
+                        <strong style="color: #AF0808">{{ form.password.errors }}</strong>
+                        <strong style="color: #AF0808">{{ form.non_field_errors }}</strong>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                    </div>
+                    <div class="clearfix">
+                        {{ form.remember_me }}
+                        <label> Remember me</label>
+                        <a href="{% url 'password reset' %}" class="pull-right">Forgot Password?</a>
+                    </div>
+                </form>
+                <p class="text-center"><a href="{% url 'register user' %}">Create an Account</a></p>
             </div>
-            <div class="form-group">
-                <label class="small mb-1">Password</label>
-                {{ form.password }}
-                <strong style="color: #AF0808">{{ form.password.errors }}</strong>
-                <strong style="color: #AF0808">{{ form.non_field_errors }}</strong>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Log in</button>
-            </div>
-            <div class="clearfix">
-                {{ form.remember_me }}
-                <label> Remember me</label>
-                <a href="{% url 'password reset' %}" class="pull-right">Forgot Password?</a>
-            </div>
-        </form>
-        <p class="text-center"><a href="{% url 'register user' %}">Create an Account</a></p>
-    </div>
+        </div>
+    </section>
 {% endblock %}

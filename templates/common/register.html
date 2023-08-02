@@ -3,37 +3,41 @@
 {% block title %} Register{% endblock title %}
 
 {% block content %}
-    <div class="signup-form">
-        <form action="{% url 'register user' %}" method="post" novalidate>
-            {% csrf_token %}
-            <h2>Register</h2>
-            <div class="form-group">
-                <div class="row">
-                    <label class="small mb-1">Username</label>
-                    {{ form.username }}
-                    <strong style="color: #AF0808">{{ form.username.errors }}</strong>
-                    <label class="small mb-1">Email</label>
-                    {{ form.email }}
-                    <strong style="color: #AF0808">{{ form.email.errors }}</strong>
-                </div>
+    <section class="wrapper" style="margin-top: 50px">
+        <div class="container-fostrap">
+            <div class="signup-form">
+                <form action="{% url 'register user' %}" method="post" novalidate>
+                    {% csrf_token %}
+                    <h2>Register</h2>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="small mb-1">Username</label>
+                            {{ form.username }}
+                            <strong style="color: #AF0808">{{ form.username.errors }}</strong>
+                            <label class="small mb-1">Email</label>
+                            {{ form.email }}
+                            <strong style="color: #AF0808">{{ form.email.errors }}</strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="small mb-1">Password</label>
+                            {{ form.password1 }}
+                            <strong style="color: #AF0808">{{ form.password1.errors }}</strong>
+                            <label class="small mb-1">Confirm Password</label>
+                            {{ form.password2 }}
+                            <strong style="color: #AF0808">{{ form.password2.errors }}</strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Register Now</button>
+                        </div>
+                    </div>
+                    <div class="text-center">Already have an account? <a href="{% url 'login' %}" style="color: blue">Sign
+                        in</a></div>
+                </form>
             </div>
-            <div class="form-group">
-                <div class="row">
-                    <label class="small mb-1">Password</label>
-                    {{ form.password1 }}
-                    <strong style="color: #AF0808">{{ form.password1.errors }}</strong>
-                    <label class="small mb-1">Confirm Password</label>
-                    {{ form.password2 }}
-                    <strong style="color: #AF0808">{{ form.password2.errors }}</strong>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">Register Now</button>
-                </div>
-            </div>
-            <div class="text-center">Already have an account? <a href="{% url 'login' %}" style="color: blue">Sign
-                in</a></div>
-        </form>
-    </div>
+        </div>
+    </section>
 {% endblock content %}
