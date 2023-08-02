@@ -1,0 +1,70 @@
+{% extends "common/base.html" %}
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="text-center">
+                    <img src="{{ user.profile.avatar.url }}" class="avatar img-circle" alt="avatar">
+                </div>
+            </div>
+
+            <div class="col-md-9 personal-info">
+                <h3>Profile info</h3>
+                <form method="get" enctype="multipart/form-data" class="form-horizontal">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">First name:</label>
+                        <div class="col-lg-8">
+                            <strong style="color: #AF0808">{{ profile_form.first_name.errors }}</strong>
+                            {{ profile_form.first_name }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Last name:</label>
+                        <div class="col-lg-8">
+                            <strong style="color: #AF0808">{{ profile_form.last_name.errors }}</strong>
+                            {{ profile_form.last_name }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Email:</label>
+                        <div class="col-lg-8">
+                            <strong style="color: #AF0808">{{ user_form.email.errors }}</strong>
+                            {{ user_form.email }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Username:</label>
+                        <div class="col-md-8">
+                            {{ user_form.username }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">About:</label>
+                        <div class="col-md-8">
+                            {{ profile_form.bio }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                            <a href="{% url 'edit profile' user.pk %}">
+                                <button class="btn btn-primary mt-4">Edit profile</button>
+                            </a>
+                            <span></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+{% endblock %}
