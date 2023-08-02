@@ -29,7 +29,7 @@
 <body>
 {% include 'common/../partials/navbar.html' %}
 {% if messages %}
-    <div class="alert alert-dismissible" role="alert">
+    <div class="alert alert-dismissible" role="alert" style="margin-top: 50px;">
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">{{ message }}</div>
         {% endfor %}
