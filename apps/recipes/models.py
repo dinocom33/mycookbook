@@ -94,6 +94,9 @@ class Recipe(models.Model):
     def average_rating(self) -> float:
         return Rating.objects.filter(recipe=self).aggregate(Avg("rating"))["rating__avg"] or 0
 
+    def category_verbose_name(self):
+        return dict(self.CATEGORY_CHOICES)[self.category]
+
     def __str__(self):
         return self.title
 

@@ -158,6 +158,8 @@ class RecipeByCategoryView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
+        recipe = Recipe.objects.filter(category=self.kwargs['category']).first()
+        context['recipe'] = recipe
         return context
 
     def get_queryset(self):
