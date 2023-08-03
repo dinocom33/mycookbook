@@ -15,27 +15,27 @@
             <div class="col-md-9 personal-info">
                 <h3>Profile info</h3>
                 <form method="post" enctype="multipart/form-data" class="form-horizontal"
-                      action="{% url 'edit profile' user.pk %}">
+                      action="{% url 'edit profile' user.pk %}" novalidate>
                     {% csrf_token %}
                     <div class="form-group">
                         <label class="col-lg-3 control-label">First name:</label>
                         <div class="col-lg-8">
-                            <strong style="color: #AF0808">{{ profile_form.first_name.errors }}</strong>
                             {{ profile_form.first_name }}
+                            <strong style="color: #AF0808">{{ profile_form.first_name.errors }}</strong>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Last name:</label>
                         <div class="col-lg-8">
-                            <strong style="color: #AF0808">{{ profile_form.last_name.errors }}</strong>
                             {{ profile_form.last_name }}
+                            <strong style="color: #AF0808">{{ profile_form.last_name.errors }}</strong>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Email:</label>
                         <div class="col-lg-8">
-                            <strong style="color: #AF0808">{{ user_form.email.errors }}</strong>
                             {{ user_form.email }}
+                            <strong style="color: #AF0808">{{ user_form.email.errors }}</strong>
                         </div>
                     </div>
                     <div class="form-group">

@@ -7,16 +7,18 @@ from .models import Profile
 
 
 class UpdateUserForm(forms.ModelForm):
-    username = forms.CharField(max_length=100,
-                               required=True,
-                               disabled=True,
-                               widget=forms.TextInput(attrs={
-                                   'class': 'form-control'
-                               }))
-    email = forms.EmailField(required=True,
-                             widget=forms.TextInput(attrs={
-                                 'class': 'form-control'
-                             }))
+    username = forms.CharField(
+        max_length=100,
+        required=True,
+        disabled=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        }))
+    email = forms.EmailField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        }))
 
     class Meta:
         model = User
@@ -24,24 +26,30 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class UpdateProfileForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=100,
-                                 required=False,
-                                 widget=forms.TextInput(attrs={'placeholder': 'First Name',
-                                                               'class': 'form-control',
-                                                               }))
-    last_name = forms.CharField(max_length=100,
-                                required=False,
-                                widget=forms.TextInput(attrs={'placeholder': 'Last Name',
-                                                              'class': 'form-control',
-                                                              }))
-    avatar = forms.ImageField(required=False,
-                              widget=forms.FileInput(attrs={
-                                  'class': 'form-control-file'
-                              }))
-    bio = forms.CharField(required=False,
-                          widget=forms.Textarea(attrs={
-                              'class': 'form-control', 'rows': 5
-                          }))
+    first_name = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'First Name',
+                   'class': 'form-control',
+                   }))
+    last_name = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Last Name',
+                   'class': 'form-control',
+                   }))
+    avatar = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'form-control-file'
+        }))
+    bio = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control', 'rows': 5
+        }))
 
     class Meta:
         model = Profile
@@ -55,7 +63,6 @@ class ChangePasswordForm(PasswordChangeForm):
 
 
 class ResetPasswordForm(PasswordResetForm):
-
     class Meta:
         model = get_user_model()
         fields = ['new_password1', 'new_password2']

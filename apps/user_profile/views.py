@@ -27,6 +27,14 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMix
             messages.success(request, 'Your profile has been updated successfully')
             return redirect('edit profile', pk=request.user.pk)
 
+        context = {
+            'user_form': user_form,
+            'profile_form': profile_form,
+            'user': user
+        }
+
+        return render(request, 'user_profile/edit-profile.html', context)
+
     def get(self, request, *args, **kwargs):
         user = UserModel.objects.get(pk=self.kwargs['pk'])
         user_form = UpdateUserForm(instance=request.user)

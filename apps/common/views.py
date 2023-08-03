@@ -53,6 +53,7 @@ class UserLoginView(LoginView):
 
         if not remember_me:
             self.request.session.set_expiry(0)
+            self.request.session.modified = True
 
         return super(UserLoginView, self).form_valid(form)
 

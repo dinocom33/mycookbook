@@ -11,9 +11,10 @@ class RegisterForm(UserCreationForm):
         max_length=20,
         required=True,
         label='Username',
-        widget=forms.TextInput(attrs={'placeholder': 'Username',
-                                      'class': 'form-control',
-                                      }))
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Username',
+                   'class': 'form-control',
+                   }))
     email = forms.EmailField(
         required=True,
         label='Email',
@@ -26,20 +27,22 @@ class RegisterForm(UserCreationForm):
         max_length=20,
         required=True,
         label='Password',
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password',
-                                          'class': 'form-control',
-                                          'data-toggle': 'password',
-                                          'id': 'password',
-                                          }))
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Password',
+                   'class': 'form-control',
+                   'data-toggle': 'password',
+                   'id': 'password',
+                   }))
     password2 = forms.CharField(
         max_length=20,
         required=True,
         label='Confirm Password',
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password',
-                                          'class': 'form-control',
-                                          'data-toggle': 'password',
-                                          'id': 'password',
-                                          }))
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Confirm Password',
+                   'class': 'form-control',
+                   'data-toggle': 'password',
+                   'id': 'password',
+                   }))
 
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -64,18 +67,20 @@ class LoginForm(AuthenticationForm):
     username = forms.CharField(
         max_length=20,
         required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'Username',
-                                      'class': 'form-control',
-                                      }))
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Username',
+                   'class': 'form-control',
+                   }))
     password = forms.CharField(
         max_length=20,
         required=True,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password',
-                                          'class': 'form-control',
-                                          'data-toggle': 'password',
-                                          'id': 'password',
-                                          'name': 'password',
-                                          }))
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Password',
+                   'class': 'form-control',
+                   'data-toggle': 'password',
+                   'id': 'password',
+                   'name': 'password',
+                   }))
     remember_me = forms.BooleanField(
         required=False,
         widget=forms.CheckboxInput()
@@ -91,7 +96,8 @@ class LoginForm(AuthenticationForm):
             raise forms.ValidationError(f"User '{username}' does not exist. Please try again.")
 
     def confirm_login_allowed(self, user):
-        if not user.check_password(self.cleaned_data['password']):
+        password = self.cleaned_data['password']
+        if not user.check_password(password):
             raise forms.ValidationError("Incorrect password. Please try again.")
 
     class Meta:
