@@ -200,6 +200,23 @@
             </div>
         </div>
     </div>
+    <section class="wrapper" style="margin-top: 50px">
+        <div class="container-fostrap">
+            <h2>Similar Recipes</h2>
+            <hr>
+            <div class="content">
+                <div class="container" width="1500">
+                    <div class="row justify-content-md-center">
+                        {% for recipe in similar_recipes %}
+                            <div class="col-xl-12 col-sm-4">
+                                {% include 'partials/card.html' %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <script>
         function openTab(evt, cityName) {
             let i, tabcontent, tablinks;
@@ -282,5 +299,5 @@
         // Call the function when the document is loaded
         document.addEventListener('DOMContentLoaded', handleLikeButton);
     </script>
-<br>
+    <br>
 {% endblock %}

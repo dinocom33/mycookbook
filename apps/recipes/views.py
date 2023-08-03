@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse, Http404
@@ -91,6 +93,10 @@ class RecipesDetailsView(FormMixin, DetailView):
                 recipe__pk=self.kwargs['pk']).exists()
             context['avg_rating'] = Rating.objects.filter(recipe=self.object).aggregate(Avg("rating"))[
                                         "rating__avg"] or 0
+
+        similar_recipes = (Recipe.objects.filter(category=self.object.category)
+                           .exclude(pk=self.object.pk, slug=self.object.slug)).order_by('?')[:3]
+        context['similar_recipes'] = similar_recipes
 
         return context
 

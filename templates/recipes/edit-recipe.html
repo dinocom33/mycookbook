@@ -8,7 +8,7 @@
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <div id="form_errors">
                         {% for key, value in form.errors.items %}
-                            <strong>{{ value }}</strong>
+                            <strong>{{ value|striptags }}</strong>
                         {% endfor %}
                     </div>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

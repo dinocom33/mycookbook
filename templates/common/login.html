@@ -12,13 +12,13 @@
                     <div class="form-group">
                         <label class="small mb-1">Username</label>
                         {{ form.username }}
-                        <strong style="color: #AF0808">{{ form.username.errors }}</strong>
+                        <strong style="color: #AF0808">{{ form.username.errors|striptags }}</strong>
                     </div>
                     <div class="form-group">
                         <label class="small mb-1">Password</label>
                         {{ form.password }}
-                        <strong style="color: #AF0808">{{ form.password.errors }}</strong>
-                        <strong style="color: #AF0808">{{ form.non_field_errors }}</strong>
+                        <strong style="color: #AF0808">{{ form.password.errors|striptags }}</strong>
+                        <strong style="color: #AF0808">{{ form.non_field_errors|striptags }}</strong>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">Log in</button>
