@@ -70,6 +70,7 @@ class Recipe(models.Model):
         upload_to='recipe_images',
         null=True,
         blank=True,
+        verbose_name='Recipe image',
         validators=[
             file_size_validator,
         ]

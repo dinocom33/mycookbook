@@ -66,3 +66,9 @@ class ResetPasswordForm(PasswordResetForm):
     class Meta:
         model = get_user_model()
         fields = ['new_password1', 'new_password2']
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not get_user_model().objects.filter(email=email).exists():
+            raise forms.ValidationError('User with this email does not exist.')
+        return email

@@ -22,27 +22,10 @@
         </fieldset>
         <form method="POST" action="{% url 'add recipe' %}" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            <div class="row">
-                <div class="col-6">
-                    {{ form.title|as_crispy_field }}
-                </div>
-                <div class="col-6">
-                    {{ form.ingredients|as_crispy_field }}
-                </div>
-                <div class="col-6">
-                    {{ form.instructions|as_crispy_field }}
-                </div>
-                <div class="col-6">
-                    {{ form.category|as_crispy_field }}
-                </div>
-                <div class="col-6">
-                    {{ form.image|as_crispy_field }}
-                </div>
-                <br>
-                <div class="form-group py-3">
-                    <button type="submit" class="btn btn-success">Save</button>
-                    <button type="submit" class="btn" onclick="history.back()">Back</button>
-                </div>
+            {{ form|crispy }}
+            <div class="form-group py-3">
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="submit" class="btn" onclick="history.back()">Back</button>
             </div>
         </form>
     </div>
