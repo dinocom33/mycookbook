@@ -1,11 +1,11 @@
 {% extends "common/base.html" %}
-{% block title %} {{ recipe.category_verbose_name }}{% endblock title %}
+{% block title %} {{ category_name }}{% endblock title %}
 {% block content %}
 
     <section class="wrapper" style="margin-top: 50px">
         {% if recipe_by_category %}
             <div class="container-fostrap">
-                <h1>{{ recipe.category_verbose_name }}</h1>
+                <h1>{{ category_name }}</h1>
             <hr>
                 <div class="content">
                     <div class="container">

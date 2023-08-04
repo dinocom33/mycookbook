@@ -147,6 +147,7 @@ class SearchResultsView(ListView):
             return Recipe.objects.filter(Q(title__icontains=query) |
                                          Q(ingredients__icontains=query) |
                                          Q(cuisine__icontains=query)).order_by('-created_at')
+
         return Recipe.objects.all().order_by('-created_at')
 
 
@@ -160,7 +161,9 @@ class RecipeByCategoryView(ListView):
         context = super().get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
         recipe = Recipe.objects.filter(category=self.kwargs['category']).first()
-        context['recipe'] = recipe
+        if recipe:
+            context['category_name'] = recipe.category_verbose_name()
+
         return context
 
     def get_queryset(self):
@@ -178,7 +181,8 @@ class RecipeByCuisineView(ListView):
         context = super().get_context_data(**kwargs)
         context['cuisine'] = self.kwargs['cuisine']
         recipe = Recipe.objects.filter(cuisine=self.kwargs['cuisine']).first()
-        context['recipe'] = recipe
+        if recipe:
+            context['cuisine_name'] = recipe.cuisine_verbose_name()
         return context
 
     def get_queryset(self):
