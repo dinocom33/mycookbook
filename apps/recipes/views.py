@@ -18,7 +18,7 @@ from apps.recipes.models import Recipe, FavoriteRecipeModel
 
 class CreateRecipeView(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['title', 'ingredients', 'instructions', 'category', 'image']
+    fields = ['title', 'ingredients', 'instructions', 'category', 'cuisine', 'image']
     template_name = 'recipes/create-recipe.html'
 
     def form_valid(self, form):
@@ -49,7 +49,7 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class EditRecipeView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Recipe
-    fields = ['title', 'ingredients', 'instructions', 'category', 'image']
+    fields = ['title', 'ingredients', 'instructions', 'category', 'cuisine', 'image']
     template_name = 'recipes/edit-recipe.html'
 
     def get_success_url(self):
@@ -145,7 +145,8 @@ class SearchResultsView(ListView):
         query = self.request.GET.get('q')
         if query:
             return Recipe.objects.filter(Q(title__icontains=query) |
-                                         Q(ingredients__icontains=query)).order_by('-created_at')
+                                         Q(ingredients__icontains=query) |
+                                         Q(cuisine__icontains=query)).order_by('-created_at')
         return Recipe.objects.all().order_by('-created_at')
 
 
@@ -165,6 +166,24 @@ class RecipeByCategoryView(ListView):
     def get_queryset(self):
         category = self.kwargs['category']
         return Recipe.objects.filter(category=category).order_by('-created_at')
+
+
+class RecipeByCuisineView(ListView):
+    model = Recipe
+    template_name = 'recipes/recipe-by-cuisine.html'
+    context_object_name = 'recipe_by_cuisine'
+    paginate_by = 6
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cuisine'] = self.kwargs['cuisine']
+        recipe = Recipe.objects.filter(cuisine=self.kwargs['cuisine']).first()
+        context['recipe'] = recipe
+        return context
+
+    def get_queryset(self):
+        cuisine = self.kwargs['cuisine']
+        return Recipe.objects.filter(cuisine=cuisine).order_by('-created_at')
 
 
 class AddRemoveFavoritesView(LoginRequiredMixin, FormMixin, DetailView):

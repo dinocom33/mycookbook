@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import CreateRecipeView, MyRecipesView, RecipesDetailsView, AllRecipeListView, MyRecipesDetailsView, \
     SearchResultsView, RecipeByCategoryView, EditRecipeView, RecipeDeleteView, AddRemoveFavoritesView, FavoriteListView, \
-    hit_like_button, rate_recipe_view
+    hit_like_button, rate_recipe_view, RecipeByCuisineView
 
 urlpatterns = [
     path('all-recipes/', AllRecipeListView.as_view(), name='all recipes'),
@@ -15,6 +15,7 @@ urlpatterns = [
     path('rate/<int:pk>/<slug:slug>/', rate_recipe_view, name='rate recipe'),
     path('my-favorites/<int:pk>/', FavoriteListView.as_view(), name='favorite recipes'),
     path('category/<str:category>/', RecipeByCategoryView.as_view(), name='recipe by category'),
+    path('cuisine/<str:cuisine>/', RecipeByCuisineView.as_view(), name='recipe by cuisine'),
     path('details/<int:pk>/<slug:slug>/', RecipesDetailsView.as_view(), name='recipe details'),
     path('edit/<int:pk>/<slug:slug>/', EditRecipeView.as_view(), name='edit recipe'),
     path('delete/<int:pk>/<slug:slug>/', RecipeDeleteView.as_view(), name='delete recipe'),

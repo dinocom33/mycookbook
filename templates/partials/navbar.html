@@ -23,12 +23,29 @@
                     <li><a href="{% url 'all recipes' %}">All recipes</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="{% url 'all recipes' %}">Cuisines <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'recipe by cuisine' cuisine='thai' %}">Thai</a></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='indian' %}">Indian</a></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='japanese' %}">Japanese</a></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='chinese' %}">Chinese</a></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='korean' %}">Korean</a></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='italian' %}">Italian</a></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='spanish' %}">Spanish</a></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='french' %}">French</a></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='mexican' %}">Mexican</a></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='american' %}">American</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="{% url 'recipe by cuisine' cuisine='world' %}">World</a></li>
+                </ul>
+            </li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
         </ul>
         <form method="get" class="navbar-form form-inline" action="{% url 'search results' %}">
             <div class="input-group search-box">
-                <input type="text" id="search" class="form-control" name="q" placeholder="Search by title or ingredients">
+                <input type="text" id="search" class="form-control" name="q" placeholder="Search by title, ingredients or cuisine">
                 <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
             </div>
         </form>

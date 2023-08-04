@@ -1,16 +1,16 @@
 {% extends "common/base.html" %}
-{% block title %} {{ recipe.category_verbose_name }}{% endblock title %}
+{% block title %} {{ recipe.cuisine_verbose_name }} Recipes{% endblock title %}
 {% block content %}
 
-    <section class="wrapper" style="margin-top: 50px">
-        {% if recipe_by_category %}
+    <section class="wrapper" style="margin-top: 80px">
+        {% if recipe_by_cuisine %}
             <div class="container-fostrap">
-                <h1>{{ recipe.category_verbose_name }}</h1>
+                <h1>{{ recipe.cuisine_verbose_name }} Recipes</h1>
             <hr>
                 <div class="content">
                     <div class="container">
                         <div class="row">
-                            {% for recipe in recipe_by_category %}
+                            {% for recipe in recipe_by_cuisine %}
                                 <div class="col-xs-12 col-sm-4">
                                     {% include 'recipes/../partials/card.html' %}
                                 </div>

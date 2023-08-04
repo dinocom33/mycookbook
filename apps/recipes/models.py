@@ -10,7 +10,6 @@ UserModel = get_user_model()
 
 
 class Recipe(models.Model):
-
     TITLE_MAX_LENGTH = 255
 
     CATEGORY_CHOICES = (
@@ -20,6 +19,22 @@ class Recipe(models.Model):
         ('bbq', 'BBQ'),
         ('deserts', 'Desserts'),
     )
+
+    CUISINE_CHOICES = (
+        ('thai', 'Thai'),
+        ('indian', 'Indian'),
+        ('japanese', 'Japanese'),
+        ('chinese', 'Chinese'),
+        ('korean', 'Korean'),
+        ('italian', 'Italian'),
+        ('spanish', 'Spanish'),
+        ('french', 'French'),
+        ('mexican', 'Mexican'),
+        ('american', 'American'),
+        ('world', 'World'),
+    )
+
+    CUISINE_MAX_LENGTH = max(len(c[0]) for c in CUISINE_CHOICES)
 
     CHOICES_MAX_LENGTH = max(len(c[0]) for c in CATEGORY_CHOICES)
 
@@ -66,6 +81,13 @@ class Recipe(models.Model):
         verbose_name='Recipe Category',
     )
 
+    cuisine = models.CharField(
+        max_length=CUISINE_MAX_LENGTH,
+        choices=CUISINE_CHOICES,
+        null=False,
+        blank=False,
+    )
+
     image = models.ImageField(
         upload_to='recipe_images',
         null=True,
@@ -97,6 +119,9 @@ class Recipe(models.Model):
 
     def category_verbose_name(self):
         return dict(self.CATEGORY_CHOICES)[self.category]
+
+    def cuisine_verbose_name(self):
+        return dict(self.CUISINE_CHOICES)[self.cuisine]
 
     def __str__(self):
         return self.title

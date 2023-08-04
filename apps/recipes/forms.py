@@ -4,6 +4,7 @@ from apps.recipes.models import Recipe, FavoriteRecipeModel, Rating
 
 
 class RecipeCreateForm(forms.ModelForm):
+
     class Meta:
         model = Recipe
         fields = '__all__'
