@@ -91,6 +91,9 @@
         <div class="recipe-card__body">
             <div id="printableArea">
                 <h1 class="recipe-card__heading">{{ recipe.title }}</h1>
+                <div style="margin: auto; width: 50%; text-align: center">
+                    <h4>Cuisine: {{ recipe.cuisine_verbose_name }} | Category: {{ recipe.category_verbose_name }}</h4>
+                </div>
                 <ul class="recipe-card__nav">
                     <li>
                         <h3 href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'ingredients')"
