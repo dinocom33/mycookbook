@@ -53,12 +53,14 @@ class Profile(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        img = Image.open(self.avatar.path)
+        if self.avatar:
 
-        if img.height > 200 or img.width > 200:
-            new_img = (200, 200)
-            img.thumbnail(new_img)
-            img.save(self.avatar.path)
+            img = Image.open(self.avatar.path)
+
+            if img.height > 200 or img.width > 200:
+                new_img = (200, 200)
+                img.thumbnail(new_img)
+                img.save(self.avatar.path)
 
     @property
     def get_full_name(self):
