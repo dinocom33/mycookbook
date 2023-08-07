@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
         <a class="navbar-brand" href="{% url 'index' %}"><i class="fa fa-book"></i>My <b>Cook book</b></a>
@@ -12,7 +13,8 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="{% url 'index' %}">Home</a></li>
             <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="{% url 'all recipes' %}">Recipes <b class="caret"></b></a>
+                <a data-toggle="dropdown" class="dropdown-toggle" href="{% url 'all recipes' %}">Recipes <b
+                        class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="{% url 'recipe by category' category='salads' %}">Salads</a></li>
                     <li><a href="{% url 'recipe by category' category='soups' %}">Soups</a></li>
@@ -24,7 +26,8 @@
                 </ul>
             </li>
             <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="{% url 'all recipes' %}">Cuisine <b class="caret"></b></a>
+                <a data-toggle="dropdown" class="dropdown-toggle" href="{% url 'all recipes' %}">Cuisine <b
+                        class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="{% url 'recipe by cuisine' cuisine='thai' %}">Thai</a></li>
                     <li><a href="{% url 'recipe by cuisine' cuisine='indian' %}">Indian</a></li>
@@ -45,7 +48,8 @@
         </ul>
         <form method="get" class="navbar-form form-inline" action="{% url 'search results' %}">
             <div class="input-group search-box">
-                <input type="text" id="search" class="form-control" name="q" placeholder="Search by title, ingredients or cuisine">
+                <input type="text" id="search" class="form-control" name="q"
+                       placeholder="Search by title, ingredients or cuisine">
                 <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
             </div>
         </form>
@@ -53,11 +57,17 @@
             {% if request.user.is_authenticated %}
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle user-action">
-                        <img src="{{ user.profile.avatar.url }}" class="avatar">
+                        {% if request.user.profile.avatar %}
+                            <img src="{{ user.profile.avatar.url }}" class="avatar">
+                        {% else %}
+                            <img src="{% static 'images/default.jpg' %}">
+                        {% endif %}
                         {% firstof request.user.profile.get_full_name request.user.username %} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'my recipes' user.pk %}"><i class="fa-thin fa-pot-food"></i> My recipes</a></li>
-                        <li><a href="{% url 'favorite recipes' request.user.pk %}"><i class="fa-thin fa-pot-food"></i> My Favorite Recipes</a></li>
+                        <li><a href="{% url 'my recipes' user.pk %}"><i class="fa-thin fa-pot-food"></i> My recipes</a>
+                        </li>
+                        <li><a href="{% url 'favorite recipes' request.user.pk %}"><i class="fa-thin fa-pot-food"></i>
+                            My Favorite Recipes</a></li>
                         <li><a href="{% url 'add recipe' %}"><i class="fa-thin fa-pot-food"></i> Add recipe</a></li>
                         <li class="divider"></li>
                         <li><a href="{% url 'edit profile' user.pk %}"><i class="fa fa-user-o"></i> Profile</a></li>

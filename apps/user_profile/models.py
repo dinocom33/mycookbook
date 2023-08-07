@@ -39,19 +39,19 @@ class Profile(models.Model):
     )
 
     avatar = models.ImageField(
+        upload_to='profile_images',
         default='profile_images/default.jpg',
-        upload_to='profile_images/',
         null=True,
-        blank=True
+        blank=True,
     )
 
     bio = models.TextField(
         null=True,
-        blank=True
+        blank=True,
     )
 
     def save(self, *args, **kwargs):
-        super().save()
+        super().save(*args, **kwargs)
 
         img = Image.open(self.avatar.path)
 
