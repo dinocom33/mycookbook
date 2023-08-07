@@ -94,9 +94,13 @@ class RecipesDetailsView(FormMixin, DetailView):
             context['avg_rating'] = Rating.objects.filter(recipe=self.object).aggregate(Avg("rating"))[
                                         "rating__avg"] or 0
 
-        similar_recipes = (Recipe.objects.filter(category=self.object.category)
-                           .exclude(pk=self.object.pk, slug=self.object.slug)).order_by('?')[:3]
-        context['similar_recipes'] = similar_recipes
+        similar_recipes_by_category = (Recipe.objects.filter(category=self.object.category)
+                                       .exclude(pk=self.object.pk, slug=self.object.slug)).order_by('?')[:3]
+        context['similar_recipes_by_category'] = similar_recipes_by_category
+
+        similar_recipes_by_cuisine = (Recipe.objects.filter(cuisine=self.object.cuisine)
+                                      .exclude(pk=self.object.pk, slug=self.object.slug)).order_by('?')[:3]
+        context['similar_recipes_by_cuisine'] = similar_recipes_by_cuisine
 
         return context
 
