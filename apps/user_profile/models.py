@@ -40,7 +40,7 @@ class Profile(models.Model):
 
     avatar = models.ImageField(
         default='profile_images/default.jpg',
-        upload_to='profile_images',
+        upload_to='profile_images/',
         null=True,
         blank=True
     )
