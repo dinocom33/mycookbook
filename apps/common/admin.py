@@ -7,7 +7,7 @@ from apps.common.models import CommentsModel, Contact
 class CommentsModelAdmin(admin.ModelAdmin):
     list_display = ('id', 'text', 'published_date', 'recipe', 'user')
     list_filter = ('published_date', 'recipe', 'user')
-    search_fields = ('text', 'recipe', 'user')
+    search_fields = ('text', 'recipe__title', 'user__username')
     readonly_fields = ('published_date',)
     fieldsets = (
         (
