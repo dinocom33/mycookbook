@@ -23,9 +23,11 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <label class="small mb-1">Password</label>
-                            {{ form.password1 }}
-                            <strong style="color: #AF0808">{{ form.password1.errors|striptags }}</strong>
+                            <div>
+                                <label class="small mb-1">Password</label>
+                                {{ form.password1 }}
+                                <strong style="color: #AF0808">{{ form.password1.errors|striptags }}</strong>
+                            </div>
                             <label class="small mb-1">Confirm Password</label>
                             {{ form.password2 }}
                             <strong style="color: #AF0808">{{ form.password2.errors|striptags }}</strong>

@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'crispy_bootstrap4',
+    'django_email_verification',
 
     'apps.common',
     'apps.user_profile',
@@ -30,6 +31,21 @@ INSTALLED_APPS = [
 
     'django_cleanup.apps.CleanupConfig',
 ]
+
+
+def verified_callback(user):
+    user.is_active = True
+
+
+EMAIL_VERIFIED_CALLBACK = verified_callback
+EMAIL_FROM_ADDRESS = os.getenv('EMAIL_FROM_ADDRESS')
+EMAIL_MAIL_SUBJECT = 'Confirm your email {{ user.username }}'
+EMAIL_MAIL_HTML = 'registration/mail-body.html'
+EMAIL_MAIL_PLAIN = 'registration/mail-body.txt'
+EMAIL_MAIL_TOKEN_LIFE = 60 * 60
+EMAIL_MAIL_PAGE_TEMPLATE = 'registration/confirm-template.html'
+EMAIL_PAGE_DOMAIN = os.getenv('EMAIL_PAGE_DOMAIN')
+
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

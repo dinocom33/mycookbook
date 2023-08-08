@@ -1,12 +1,17 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponseRedirect, request
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import ListView, CreateView
+from django_email_verification import send_email
 
 from .forms import RegisterForm, LoginForm, ContactForm
 
 from ..recipes.models import Recipe
+
+UserModel = get_user_model()
 
 
 class IndexView(ListView):
@@ -32,7 +37,17 @@ class RegisterView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        return super().form_valid(form)
+        form.save(commit=False)
+        user_email = form.cleaned_data['email']
+        user_username = form.cleaned_data['username']
+        user_password = form.cleaned_data['password1']
+
+        user = UserModel.objects.create_user(username=user_username, email=user_email, password=user_password)
+
+        user.is_active = False
+        send_email(user)
+
+        return HttpResponseRedirect(reverse('login'))
 
     def form_invalid(self, form):
         return super().form_invalid(form)
