@@ -9,8 +9,8 @@ from apps.recipes.models import Recipe, FavoriteRecipeModel, LikedRecipe, Rating
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'cuisine', 'created_by', 'created_at', 'updated_at', 'likes_count',
                     'favorite_count', 'comments_count', 'avg_rating')
-    list_filter = ('category', 'cuisine', 'created_by', 'created_at', 'updated_at', 'title')
-    search_fields = ('created_by', 'created_at', 'updated_at', 'title')
+    list_filter = ('category', 'cuisine', 'created_by', 'created_at', 'updated_at')
+    search_fields = ('title', 'category', 'cuisine')
     auto_populate_field = ('slug',)
     readonly_fields = ('created_at', 'updated_at', 'slug')
     fieldsets = (
@@ -82,7 +82,7 @@ class RecipeAdmin(admin.ModelAdmin):
     def favorite_count(self, obj):
         return FavoriteRecipeModel.objects.filter(recipe=obj).count()
 
-    favorite_count.short_description = 'Favorite to'
+    favorite_count.short_description = 'Favorites'
 
     def comments_count(self, obj):
         return CommentsModel.objects.filter(recipe=obj).count()
@@ -99,7 +99,7 @@ class RecipeAdmin(admin.ModelAdmin):
 class AdminFavoriteRecipe(admin.ModelAdmin):
     list_display = ('user', 'recipe')
     list_filter = ('user', 'recipe')
-    search_fields = ('user', 'recipe')
+    search_fields = ('user__username', 'recipe__title')
 
     fieldsets = (
         (
@@ -124,7 +124,7 @@ class AdminFavoriteRecipe(admin.ModelAdmin):
 class AdminLikedRecipe(admin.ModelAdmin):
     list_display = ('user', 'recipe', 'liked_date')
     list_filter = ('user', 'recipe', 'liked_date')
-    search_fields = ('user', 'recipe', 'liked_date')
+    search_fields = ('user__username', 'recipe__title',)
     readonly_fields = ('liked_date',)
 
     fieldsets = (
@@ -156,7 +156,7 @@ class AdminLikedRecipe(admin.ModelAdmin):
 class AdminRating(admin.ModelAdmin):
     list_display = ('user', 'recipe', 'rating')
     list_filter = ('user', 'recipe', 'rating')
-    search_fields = ('user', 'recipe', 'rating')
+    search_fields = ('user__username', 'recipe__title', 'rating')
     fieldsets = (
         (
             'User',
