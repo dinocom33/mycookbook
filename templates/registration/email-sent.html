@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Confirmation</title>
+{% extends "common/base.html" %}
+{% block content %}
     <style>
-        body, h1 {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            color: #333;
-        }
-
-        .container {
+        .container_success {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
@@ -34,24 +23,26 @@
             color: #FF5733;
         }
 
-        .footer {
+        .footer_success {
             text-align: center;
             margin-top: 20px;
         }
     </style>
-</head>
-<body>
-<div class="container">
-    <div class="header">
-        <h1>Email sent</h1>
-    </div>
-    <div class="content">
-        <p class="success-message" style="text-align: center">An email has been sent to the email address you registered with.
-            Please check your inbox for further instructions.</p>
-    </div>
-    <div class="footer">
-        <p>© 2023 My Cook Book. All rights reserved.</p>
-    </div>
-</div>
-</body>
-</html>
+
+    <body>
+    <section class="wrapper" style="margin-top: 50px">
+        <div class="container_success">
+            <div class="header">
+                <h1>Email Confirmation</h1>
+            </div>
+            <div class="content">
+                    <p class="success-message" style="text-align: center">An email has been sent to the email
+                        address you registered with. Please check your inbox for further instructions.</p>
+            </div>
+            <div class="footer_success">
+                <p>© 2023 My Cook Book. All rights reserved.</p>
+            </div>
+        </div>
+    </section>
+    </body>
+{% endblock %}
