@@ -11,26 +11,27 @@
                     <h2>Register</h2>
                     <div class="form-group">
                         <div class="row">
-                            <div>
-                                <label class="small mb-1">Username</label>
-                                {{ form.username }}
-                                <strong style="color: #AF0808">{{ form.username.errors|striptags }}</strong>
-                            </div>
+                            <label class="small mb-1">Username</label>
+                            <br>
+                            <strong style="color: #AF0808">{{ form.username.errors|striptags }}</strong>
+                            {{ form.username }}
                             <label class="small mb-1">Email</label>
-                            {{ form.email }}
+                            <br>
                             <strong style="color: #AF0808">{{ form.email.errors|striptags }}</strong>
+                            {{ form.email }}
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div>
-                                <label class="small mb-1">Password</label>
-                                {{ form.password1 }}
-                                <strong style="color: #AF0808">{{ form.password1.errors|striptags }}</strong>
-                            </div>
+
+                            <label class="small mb-1">Password</label>
+                            <br>
+                            <strong style="color: #AF0808">{{ form.password1.errors|striptags }}</strong>
+                            {{ form.password1 }}
                             <label class="small mb-1">Confirm Password</label>
-                            {{ form.password2 }}
+                            <br>
                             <strong style="color: #AF0808">{{ form.password2.errors|striptags }}</strong>
+                            {{ form.password2 }}
                         </div>
                     </div>
                     <div class="form-group">
