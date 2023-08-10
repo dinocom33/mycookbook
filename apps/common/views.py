@@ -47,10 +47,15 @@ class RegisterView(CreateView):
         user.is_active = False
         send_email(user)
 
-        return HttpResponseRedirect(reverse('login'))
+        return HttpResponseRedirect(reverse('email sent'))
 
     def form_invalid(self, form):
         return super().form_invalid(form)
+
+
+class EmailSentView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'registration/email-sent.html')
 
 
 class UserLoginView(LoginView):
