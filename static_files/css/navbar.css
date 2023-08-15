@@ -74,6 +74,8 @@ body {
 .search-box i {
     color: #a0a5b1;
     font-size: 19px;
+    margin-top: 9px;
+    margin-left: 1px;
 }
 
 .navbar ul li i {
