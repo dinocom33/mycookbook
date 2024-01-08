@@ -34,7 +34,7 @@ Mycookbook is a website in wich a user can create a profile and share his favori
 
 ## Demo
 
-[You can test the demo at this link](http://ec2-13-49-4-38.eu-north-1.compute.amazonaws.com/)
+[You can test the demo at this link](https://mycookbook787.pythonanywhere.com/)
 
 ## Technologies
 
