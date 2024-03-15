@@ -1,0 +1,16 @@
+SECRET_KEY=your-django-secret-key
+DEBUG=0
+DATABASE_NAME=your-database-name
+DATABASE_USER=your-database-user
+DATABASE_PASSWORD=your-database-password
+DATABASE_HOST=your-database-host
+DATABASE_PORT=5432
+ALLOWED_HOSTS=your-allowed-hosts
+EMAIL_HOST=your-gmail-email-host
+EMAIL_USE_TLS=1
+EMAIL_PORT=587
+EMAIL_HOST_USER=your-gmail-email
+EMAIL_HOST_PASSWORD=your-gmail-password
+CONTACT_FORM_EMAIL=your-from-email
+EMAIL_FROM_ADDRESS=your-from-email
+EMAIL_PAGE_DOMAIN=your-page-domain
