@@ -56,6 +56,7 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
+#### Befor ```python manage.py makemigrations``` you have to create ```.env``` file based on ```sample.env``` and put in it your credentials.
 
 
 ## License
