@@ -49,6 +49,8 @@ Mycookbook is a website in wich a user can create a profile and share his favori
 
 To install the project follow the steps bellow(please bare in mind that you have to setup database before migration):
 
+<span style="color:red">Befor ```python manage.py makemigrations``` you have to create ```.env``` file based on ```sample.env``` and put in it your credentials.</span>
+
 ```bash
 git clone https://github.com/dinocom33/mycookbook.git
 pip install requirements.txt
@@ -56,7 +58,6 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
-#### Befor ```python manage.py makemigrations``` you have to create ```.env``` file based on ```sample.env``` and put in it your credentials.
 
 
 ## License
